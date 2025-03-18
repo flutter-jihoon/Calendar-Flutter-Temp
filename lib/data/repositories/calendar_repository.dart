@@ -22,7 +22,9 @@ class CalendarRepositoryImpl implements CalendarRepository {
   Future<List<Calendar>?> getCalendars() async {
     final List<ScheduleResponse>? result =
         await timespreadDatasource.fetchSchedules();
-    return result?.map((e) => Calendar(title: e.title)).toList();
+    return result
+        ?.map((e) => Calendar(id: e.scheduleId, title: e.title))
+        .toList();
   }
 
   @override

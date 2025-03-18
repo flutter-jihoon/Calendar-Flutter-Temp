@@ -1,5 +1,5 @@
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icons.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_list_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +27,7 @@ class EventTile extends StatelessWidget {
             label,
             style: AppTextStyles.style16Regular(),
           ),
-          trailing: CalendarAppIcon.chevronRight(16),
+          trailing: CalendarAppSquareIcon.chevronRight(16),
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           borderRadius: BorderRadius.circular(12),
           horizontalTitleGap: 6,

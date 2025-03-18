@@ -47,15 +47,9 @@ class CalendarAppButton extends StatelessWidget {
         backgroundColor: buttonType.backgroundColor,
         foregroundColor: buttonType.foregroundColor,
         padding: padding ?? const EdgeInsets.symmetric(vertical: 15),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
-      child: Center(
-        child: Text(text, style: AppTextStyles.style16Regular()),
-      ),
+      child: Center(child: Text(text, style: AppTextStyles.style16Bold())),
     );
   }
 }

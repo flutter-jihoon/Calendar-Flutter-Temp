@@ -1,6 +1,7 @@
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_dialog.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_input_dialog.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
 import 'package:calendar_flutter/presentation/providers/calendar_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,11 +70,9 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
                                 final bool? result = await showDialog<bool>(
                                   context: context,
                                   builder: (context) {
-                                    return CalendarAppDialog(
+                                    return CalendarAppInputDialog(
                                       title: '캘린더 이름 수정',
-                                      content: TextField(
-                                        controller: textEditingController,
-                                      ),
+                                      hintText: '캘린더 이름',
                                       primaryButtonText: '확인',
                                       secondaryButtonText: '취소',
                                     );
@@ -95,7 +94,7 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
                                   builder: (context) {
                                     return CalendarAppDialog(
                                       title: '캘린더 삭제',
-                                      content: Text('정말 삭제하시겠습니까?'),
+                                      subtitle: '정말 삭제하시겠습니까?',
                                       primaryButtonText: '확인',
                                       secondaryButtonText: '취소',
                                     );

@@ -1,5 +1,4 @@
 import 'package:calendar_flutter/core/providers/go_router_provider.dart';
-import 'package:calendar_flutter/core/widgets/debug_button.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:calendar_flutter/core/utils/theme_util.dart';
@@ -23,8 +22,6 @@ class CalendarApp extends ConsumerWidget {
       routeInformationParser: goRouter.routeInformationParser,
       routerDelegate: goRouter.routerDelegate,
       builder: (context, child) {
-        final Size screenSize = MediaQuery.sizeOf(context);
-        final EdgeInsets screenPadding = MediaQuery.paddingOf(context);
         return GestureDetector(
           onTap: () {
             final FocusScopeNode currentFocus = FocusScope.of(context);
@@ -33,19 +30,11 @@ class CalendarApp extends ConsumerWidget {
               currentFocus.focusedChild!.unfocus();
             }
           },
-          child: Stack(
-            children: [
-              MediaQuery(
-                data: MediaQuery.of(context).copyWith(
-                  textScaler: TextScaler.linear(1.0),
-                ),
-                child: child!,
-              ),
-              DebugButton(
-                screenSize: screenSize,
-                screenPadding: screenPadding,
-              ),
-            ],
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: TextScaler.linear(1.0),
+            ),
+            child: child!,
           ),
         );
       },

@@ -1,6 +1,6 @@
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_divider.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icons.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/presentation/screens/add_event/widgets/color_option.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class _ColorPaletteState extends State<ColorPalette>
                 turns: _isExpanded ? 0 : -0.5,
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
-                child: CalendarAppIcon.chevronUp(16),
+                child: CalendarAppSquareIcon.chevronUp(16),
               ),
             ),
             initiallyExpanded: _isExpanded,

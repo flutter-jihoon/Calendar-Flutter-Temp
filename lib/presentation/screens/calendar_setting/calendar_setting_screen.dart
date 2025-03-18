@@ -2,7 +2,8 @@ import 'package:calendar_flutter/core/enums/calendar_setting_enums.dart';
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/core/utils/string_util.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_app_bar.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_images.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_main_app_bar.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_divider.dart';
 import 'package:calendar_flutter/presentation/screens/calendar_setting/widgets/setting_option_button.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,7 +23,7 @@ class _CalendarSelectScreenState extends ConsumerState<CalendarSettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CalendarAppAppBar(title: '캘린더 디자인/설정'),
+      appBar: CalendarAppMainAppBar(title: '캘린더 디자인/설정'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
@@ -53,11 +54,9 @@ class _CalendarSelectScreenState extends ConsumerState<CalendarSettingScreen> {
                                 children: [
                                   ClipRRect(
                                     borderRadius: BorderRadius.circular(8),
-                                    child: Image.asset(
-                                      'packages/calendar_flutter/assets/images/theme_${theme.name}.webp',
-                                      width: 72,
-                                      height: 72,
-                                      fit: BoxFit.fill,
+                                    child: CalendarAppImage.theme(
+                                      theme,
+                                      Size(72, 72),
                                     ),
                                   ),
                                   Positioned.fill(

@@ -15,7 +15,7 @@ class CalendarAppListTile extends StatelessWidget {
     required this.title,
     required this.padding,
     required this.borderRadius,
-    this.horizontalTitleGap = 0,
+    this.horizontalTitleGap = 8,
     this.onTap,
     this.leading,
     this.trailing,

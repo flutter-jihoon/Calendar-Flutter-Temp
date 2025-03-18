@@ -8,7 +8,7 @@ class ProviderLogger implements ProviderObserver {
     Object? value,
     ProviderContainer container,
   ) {
-    logger.i('Provider ${provider.name} was initialized with $value');
+    logger.d('[ADD] ${provider.name}: $value');
   }
 
   @override
@@ -16,7 +16,7 @@ class ProviderLogger implements ProviderObserver {
     ProviderBase<Object?> provider,
     ProviderContainer container,
   ) {
-    logger.i('Provider ${provider.name} was disposed');
+    logger.d('[DISPOSE] ${provider.name}');
   }
 
   @override
@@ -26,8 +26,7 @@ class ProviderLogger implements ProviderObserver {
     Object? newValue,
     ProviderContainer container,
   ) {
-    logger.i(
-        'Provider ${provider.name} updated from $previousValue to $newValue');
+    logger.d('[UPDATE] ${provider.name} $previousValue → $newValue');
   }
 
   @override
@@ -37,6 +36,6 @@ class ProviderLogger implements ProviderObserver {
     StackTrace stackTrace,
     ProviderContainer container,
   ) {
-    logger.i('Provider ${provider.name} threw $error at $stackTrace');
+    logger.e('[ERROR] ${provider.name}');
   }
 }

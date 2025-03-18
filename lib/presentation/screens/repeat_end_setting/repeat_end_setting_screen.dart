@@ -1,5 +1,5 @@
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_app_bar.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_main_app_bar.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_divider.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class RepeatEndSettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CalendarAppAppBar(title: '반복'),
+      appBar: CalendarAppMainAppBar(title: '반복'),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

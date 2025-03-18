@@ -1,9 +1,9 @@
 import 'package:calendar_flutter/core/constants/route_path.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_app_bar.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_images.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_input_dialog.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_main_app_bar.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_bottom_button.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_divider.dart';
-import 'package:calendar_flutter/presentation/providers/calendar_list_provider.dart';
 import 'package:calendar_flutter/presentation/screens/calendar_select/widgets/calendar_select_list.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
@@ -19,13 +19,17 @@ class CalendarSelectScreen extends ConsumerStatefulWidget {
 }
 
 class _CalendarSelectScreenState extends ConsumerState<CalendarSelectScreen> {
+  int selectedCalendarId = 1;
+
   @override
   Widget build(BuildContext context) {
-    final Calendar? selectedCalendar = ref.watch(currentCalendarProvider);
-    final List<Calendar>? calendarList = ref.watch(calendarListProvider).value;
+    final List<Calendar> calendarList = List.generate(
+      5,
+      (index) => Calendar(id: index + 1, title: '테스트 캘린더 ${index + 1}'),
+    );
 
     return Scaffold(
-      appBar: CalendarAppAppBar(title: '캘린더', isTopmost: true),
+      appBar: CalendarAppMainAppBar(title: '캘린더', isTopmost: true),
       body: SafeArea(
         child: Column(
           children: [
@@ -48,10 +52,8 @@ class _CalendarSelectScreenState extends ConsumerState<CalendarSelectScreen> {
                           ),
                           SizedBox(height: 28),
                           Center(
-                            child: Image.asset(
-                              'packages/calendar_flutter/assets/images/calendar_select.webp',
-                              width: 160,
-                              height: 120,
+                            child: CalendarAppImage.calendarSelect(
+                              Size(160, 120),
                             ),
                           ),
                           SizedBox(height: 20),
@@ -59,14 +61,23 @@ class _CalendarSelectScreenState extends ConsumerState<CalendarSelectScreen> {
                       ),
                     ),
                   ),
-                  if (calendarList != null)
-                    CalendarSelectList(calendarList, selectedCalendar),
+                  CalendarSelectList(
+                    calendarList: calendarList,
+                    selectedCalendarId: selectedCalendarId,
+                    onChanged: (Calendar? calendar) {
+                      if (calendar != null) {
+                        setState(() => selectedCalendarId = calendar.id);
+                      }
+                    },
+                    onCalendarAddTileTap: _onCalendarAddTileTap,
+                  ),
                 ],
               ),
             ),
             CalendarAppBottomButton(
               text: '캘린더 사용하기',
               onPressed: () {
+                // TODO: 캘린더 선택 로직 구현
                 context.push(RoutePath.calendarScreenRoute);
               },
             ),
@@ -74,5 +85,20 @@ class _CalendarSelectScreenState extends ConsumerState<CalendarSelectScreen> {
         ),
       ),
     );
+  }
+
+  void _onCalendarAddTileTap() async {
+    final String? title = await showDialog<String>(
+      context: context,
+      builder: (context) => CalendarAppInputDialog(
+        title: '캘린더 추가',
+        hintText: '캘린더 제목',
+        primaryButtonText: '확인',
+        secondaryButtonText: '취소',
+      ),
+    );
+    if (title != null && title.isNotEmpty) {
+      // TODO: 캘린더 추가 로직 구현
+    }
   }
 }

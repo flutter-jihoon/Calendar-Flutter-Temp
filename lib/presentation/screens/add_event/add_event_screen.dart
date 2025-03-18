@@ -2,9 +2,9 @@ import 'package:calendar_flutter/core/constants/route_path.dart';
 import 'package:calendar_flutter/core/enums/day_of_the_week.dart';
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_app_bar.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_main_app_bar.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_bottom_button.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icons.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 // import 'package:calendar_flutter/core/widgets/calendar_app_date_picker.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_switch.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_time_picker.dart';
@@ -58,7 +58,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppPalette.grey200,
-      appBar: CalendarAppAppBar(title: '일정 추가'),
+      appBar: CalendarAppMainAppBar(title: '일정 추가'),
       body: SafeArea(
         child: Column(
           children: [
@@ -79,7 +79,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                           children: [
                             Row(
                               children: [
-                                CalendarAppIcon.clock(20),
+                                CalendarAppSquareIcon.clock(20),
                                 SizedBox(width: 6),
                                 Text(
                                   '하루 종일',
@@ -117,7 +117,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                                         ),
                                       ],
                                     ),
-                                    CalendarAppIcon.arrowRight(20),
+                                    CalendarAppSquareIcon.arrowRight(20),
                                     Column(
                                       children: [
                                         Text(

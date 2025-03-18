@@ -1,9 +1,10 @@
 import 'package:calendar_flutter/core/constants/route_path.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_dialog.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_checkbox_list_tile.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_divider.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_icon_button.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icons.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_input_dialog.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_switch.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:calendar_flutter/core/utils/color_util.dart';
@@ -126,7 +127,7 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                       ),
                       SizedBox(height: 5),
                       ListTile(
-                        leading: CalendarAppIcon.plus(20),
+                        leading: CalendarAppSquareIcon.plus(20),
                         horizontalTitleGap: 6,
                         contentPadding: EdgeInsets.symmetric(horizontal: 16),
                         visualDensity: VisualDensity(
@@ -141,33 +142,21 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                           borderRadius: BorderRadius.circular(7),
                         ),
                         onTap: () async {
-                          final TextEditingController textEditingController =
-                              TextEditingController();
-                          final bool? result = await showDialog<bool>(
+                          final String? title = await showDialog<String>(
                             context: context,
                             builder: (context) {
-                              return CalendarAppDialog(
+                              return CalendarAppInputDialog(
                                 title: '캘린더 추가',
-                                content: TextField(
-                                  controller: textEditingController,
-                                  decoration: const InputDecoration(
-                                    hintText: '캘린더 제목',
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                      vertical: 11,
-                                    ),
-                                  ),
-                                ),
+                                hintText: '캘린더 제목',
                                 primaryButtonText: '확인',
                                 secondaryButtonText: '취소',
                               );
                             },
                           );
-                          final String title = textEditingController.text;
-                          if (result == true && title.isNotEmpty) {
+                          if (title != null && title.isNotEmpty) {
                             ref
                                 .read(calendarListProvider.notifier)
-                                .addCalendar(Calendar(title: title));
+                                .addCalendar(Calendar(id: 1, title: title));
                           }
                         },
                       ),
@@ -186,31 +175,15 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                         style: AppTextStyles.style13Medium(),
                       ),
                       SizedBox(height: 12),
-                      ListTileTheme(
-                        horizontalTitleGap: 8,
-                        child: CheckboxListTile(
-                          title: Text(
-                            '공휴일',
-                            style: AppTextStyles.style15Medium(),
-                          ),
-                          value: _showHoliday,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 0),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          materialTapTargetSize:
-                              MaterialTapTargetSize.shrinkWrap,
-                          visualDensity: const VisualDensity(
-                            horizontal: VisualDensity.minimumDensity,
-                            vertical: VisualDensity.minimumDensity,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(7),
-                          ),
-                          side:
-                              BorderSide(color: AppPalette.grey400, width: 1.5),
-                          activeColor: AppPalette.primary,
-                          onChanged: (value) =>
-                              setState(() => _showHoliday = value!),
+                      CalendarAppCheckboxListTile(
+                        title: Text(
+                          '공휴일',
+                          style: AppTextStyles.style15Medium(),
                         ),
+                        value: _showHoliday,
+                        onChanged: (value) {
+                          setState(() => _showHoliday = value!);
+                        },
                       ),
                     ],
                   ),
@@ -224,44 +197,25 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                     children: [
                       Text('시간표 리스트', style: AppTextStyles.style13Medium()),
                       SizedBox(height: 12),
-                      ListTileTheme(
-                        horizontalTitleGap: 8,
-                        child: ListView.separated(
-                          physics: ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Center(
-                              child: CheckboxListTile(
-                                title: Text(
-                                  '공휴일',
-                                  style: AppTextStyles.style15Medium(),
-                                ),
-                                value: _showHoliday,
-                                contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 0),
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                materialTapTargetSize:
-                                    MaterialTapTargetSize.shrinkWrap,
-                                visualDensity: const VisualDensity(
-                                  horizontal: VisualDensity.minimumDensity,
-                                  vertical: VisualDensity.minimumDensity,
-                                ),
-                                side: BorderSide(
-                                    color: AppPalette.grey400, width: 1.5),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(7),
-                                ),
-                                activeColor: AppPalette.primary,
-                                onChanged: (value) =>
-                                    setState(() => _showHoliday = value!),
+                      ListView.separated(
+                        physics: ClampingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Center(
+                            child: CalendarAppCheckboxListTile(
+                              title: Text(
+                                '공휴일',
+                                style: AppTextStyles.style15Medium(),
                               ),
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 8),
-                        ),
+                              value: _showHoliday,
+                              onChanged: (value) {
+                                setState(() => _showHoliday = value!);
+                              },
+                            ),
+                          );
+                        },
+                        separatorBuilder: (_, __) => const SizedBox(height: 8),
                       ),
                     ],
                   ),
@@ -271,7 +225,7 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                   padding: const EdgeInsets.symmetric(vertical: 19.5),
                   child: Row(
                     children: [
-                      CalendarAppIcon.logoGoogle(20),
+                      CalendarAppSquareIcon.logoGoogle(20),
                       SizedBox(width: 8),
                       Text(
                         'Google 캘린더 연동',

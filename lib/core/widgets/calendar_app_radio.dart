@@ -1,18 +1,5 @@
-// ignore_for_file: implementation_imports, deprecated_member_use
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-
-import 'package:flutter/src/material/color_scheme.dart';
-import 'package:flutter/src/material/colors.dart';
-import 'package:flutter/src/material/constants.dart';
-import 'package:flutter/src/material/debug.dart';
-import 'package:flutter/src/material/material_state.dart';
-import 'package:flutter/src/material/radio_theme.dart';
-import 'package:flutter/src/material/theme.dart';
-import 'package:flutter/src/material/theme_data.dart';
-
-enum _RadioType { material, adaptive }
+import 'package:flutter/material.dart';
 
 const double _kOuterRadius = 12.0;
 const double _kInnerRadius = 9.0;
@@ -31,67 +18,23 @@ class CalendarAppRadio<T> extends StatefulWidget {
     this.hoverColor,
     this.overlayColor,
     this.splashRadius,
-    this.materialTapTargetSize,
-    this.visualDensity,
     this.focusNode,
     this.autofocus = false,
-  })  : _radioType = _RadioType.material,
-        useCupertinoCheckmarkStyle = false;
-
-  const CalendarAppRadio.adaptive(
-      {super.key,
-      required this.value,
-      required this.groupValue,
-      required this.onChanged,
-      this.mouseCursor,
-      this.toggleable = false,
-      this.activeColor,
-      this.fillColor,
-      this.focusColor,
-      this.hoverColor,
-      this.overlayColor,
-      this.splashRadius,
-      this.materialTapTargetSize,
-      this.visualDensity,
-      this.focusNode,
-      this.autofocus = false,
-      this.useCupertinoCheckmarkStyle = false})
-      : _radioType = _RadioType.adaptive;
+  });
 
   final T value;
-
   final T? groupValue;
-
   final ValueChanged<T?>? onChanged;
-
   final MouseCursor? mouseCursor;
-
   final bool toggleable;
-
   final Color? activeColor;
-
-  final MaterialStateProperty<Color?>? fillColor;
-
-  final MaterialTapTargetSize? materialTapTargetSize;
-
-  final VisualDensity? visualDensity;
-
+  final WidgetStateProperty<Color?>? fillColor;
   final Color? focusColor;
-
   final Color? hoverColor;
-
-  final MaterialStateProperty<Color?>? overlayColor;
-
+  final WidgetStateProperty<Color?>? overlayColor;
   final double? splashRadius;
-
   final FocusNode? focusNode;
-
   final bool autofocus;
-
-  final bool useCupertinoCheckmarkStyle;
-
-  final _RadioType _radioType;
-
   bool get _selected => value == groupValue;
 
   @override
@@ -139,12 +82,12 @@ class _CalendarAppRadioState<T> extends State<CalendarAppRadio<T>>
   @override
   Duration? get reactionAnimationDuration => kRadialReactionDuration;
 
-  MaterialStateProperty<Color?> get _widgetFillColor {
-    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.disabled)) {
+  WidgetStateProperty<Color?> get _widgetFillColor {
+    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+      if (states.contains(WidgetState.disabled)) {
         return null;
       }
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return widget.activeColor;
       }
       return null;
@@ -153,68 +96,24 @@ class _CalendarAppRadioState<T> extends State<CalendarAppRadio<T>>
 
   @override
   Widget build(BuildContext context) {
-    assert(debugCheckHasMaterial(context));
-    switch (widget._radioType) {
-      case _RadioType.material:
-        break;
-
-      case _RadioType.adaptive:
-        final ThemeData theme = Theme.of(context);
-        switch (theme.platform) {
-          case TargetPlatform.android:
-          case TargetPlatform.fuchsia:
-          case TargetPlatform.linux:
-          case TargetPlatform.windows:
-            break;
-          case TargetPlatform.iOS:
-          case TargetPlatform.macOS:
-            return CupertinoRadio<T>(
-              value: widget.value,
-              groupValue: widget.groupValue,
-              onChanged: widget.onChanged,
-              mouseCursor: widget.mouseCursor,
-              toggleable: widget.toggleable,
-              activeColor: widget.activeColor,
-              focusColor: widget.focusColor,
-              focusNode: widget.focusNode,
-              autofocus: widget.autofocus,
-              useCheckmarkStyle: widget.useCupertinoCheckmarkStyle,
-            );
-        }
-    }
-
     final RadioThemeData radioTheme = RadioTheme.of(context);
     final RadioThemeData defaults = Theme.of(context).useMaterial3
         ? _RadioDefaultsM3(context)
         : _RadioDefaultsM2(context);
-    final MaterialTapTargetSize effectiveMaterialTapTargetSize =
-        widget.materialTapTargetSize ??
-            radioTheme.materialTapTargetSize ??
-            defaults.materialTapTargetSize!;
-    final VisualDensity effectiveVisualDensity = widget.visualDensity ??
-        radioTheme.visualDensity ??
-        defaults.visualDensity!;
-    Size size = switch (effectiveMaterialTapTargetSize) {
-      MaterialTapTargetSize.padded =>
-        const Size(_kOuterRadius * 2, _kOuterRadius * 2),
-      MaterialTapTargetSize.shrinkWrap =>
-        const Size(_kOuterRadius * 2, _kOuterRadius * 2),
-    };
-    size += effectiveVisualDensity.baseSizeAdjustment;
+    final Size size = const Size(_kOuterRadius * 2, _kOuterRadius * 2);
 
-    final MaterialStateProperty<MouseCursor> effectiveMouseCursor =
-        MaterialStateProperty.resolveWith<MouseCursor>(
-            (Set<MaterialState> states) {
-      return MaterialStateProperty.resolveAs<MouseCursor?>(
+    final WidgetStateProperty<MouseCursor> effectiveMouseCursor =
+        WidgetStateProperty.resolveWith<MouseCursor>((Set<WidgetState> states) {
+      return WidgetStateProperty.resolveAs<MouseCursor?>(
               widget.mouseCursor, states) ??
           radioTheme.mouseCursor?.resolve(states) ??
-          MaterialStateProperty.resolveAs<MouseCursor>(
-              MaterialStateMouseCursor.clickable, states);
+          WidgetStateProperty.resolveAs<MouseCursor>(
+              WidgetStateMouseCursor.clickable, states);
     });
 
-    final Set<MaterialState> activeStates = states..add(MaterialState.selected);
-    final Set<MaterialState> inactiveStates = states
-      ..remove(MaterialState.selected);
+    final Set<WidgetState> activeStates = states..add(WidgetState.selected);
+    final Set<WidgetState> inactiveStates = states
+      ..remove(WidgetState.selected);
     final Color? activeColor = widget.fillColor?.resolve(activeStates) ??
         _widgetFillColor.resolve(activeStates) ??
         radioTheme.fillColor?.resolve(activeStates);
@@ -226,30 +125,30 @@ class _CalendarAppRadioState<T> extends State<CalendarAppRadio<T>>
     final Color effectiveInactiveColor =
         inactiveColor ?? defaults.fillColor!.resolve(inactiveStates)!;
 
-    final Set<MaterialState> focusedStates = states..add(MaterialState.focused);
+    final Set<WidgetState> focusedStates = states..add(WidgetState.focused);
     Color effectiveFocusOverlayColor =
         widget.overlayColor?.resolve(focusedStates) ??
             widget.focusColor ??
             radioTheme.overlayColor?.resolve(focusedStates) ??
             defaults.overlayColor!.resolve(focusedStates)!;
 
-    final Set<MaterialState> hoveredStates = states..add(MaterialState.hovered);
+    final Set<WidgetState> hoveredStates = states..add(WidgetState.hovered);
     Color effectiveHoverOverlayColor =
         widget.overlayColor?.resolve(hoveredStates) ??
             widget.hoverColor ??
             radioTheme.overlayColor?.resolve(hoveredStates) ??
             defaults.overlayColor!.resolve(hoveredStates)!;
 
-    final Set<MaterialState> activePressedStates = activeStates
-      ..add(MaterialState.pressed);
+    final Set<WidgetState> activePressedStates = activeStates
+      ..add(WidgetState.pressed);
     final Color effectiveActivePressedOverlayColor =
         widget.overlayColor?.resolve(activePressedStates) ??
             radioTheme.overlayColor?.resolve(activePressedStates) ??
             activeColor?.withAlpha(kRadialReactionAlpha) ??
             defaults.overlayColor!.resolve(activePressedStates)!;
 
-    final Set<MaterialState> inactivePressedStates = inactiveStates
-      ..add(MaterialState.pressed);
+    final Set<WidgetState> inactivePressedStates = inactiveStates
+      ..add(WidgetState.pressed);
     final Color effectiveInactivePressedOverlayColor =
         widget.overlayColor?.resolve(inactivePressedStates) ??
             radioTheme.overlayColor?.resolve(inactivePressedStates) ??
@@ -257,10 +156,10 @@ class _CalendarAppRadioState<T> extends State<CalendarAppRadio<T>>
             defaults.overlayColor!.resolve(inactivePressedStates)!;
 
     if (downPosition != null) {
-      effectiveHoverOverlayColor = states.contains(MaterialState.selected)
+      effectiveHoverOverlayColor = states.contains(WidgetState.selected)
           ? effectiveActivePressedOverlayColor
           : effectiveInactivePressedOverlayColor;
-      effectiveFocusOverlayColor = states.contains(MaterialState.selected)
+      effectiveFocusOverlayColor = states.contains(WidgetState.selected)
           ? effectiveActivePressedOverlayColor
           : effectiveInactivePressedOverlayColor;
     }
@@ -299,8 +198,8 @@ class _CalendarAppRadioState<T> extends State<CalendarAppRadio<T>>
               radioTheme.splashRadius ??
               kRadialReactionRadius
           ..downPosition = downPosition
-          ..isFocused = states.contains(MaterialState.focused)
-          ..isHovered = states.contains(MaterialState.hovered)
+          ..isFocused = states.contains(WidgetState.focused)
+          ..isHovered = states.contains(WidgetState.hovered)
           ..activeColor = effectiveActiveColor
           ..inactiveColor = effectiveInactiveColor,
       ),
@@ -336,12 +235,12 @@ class _RadioDefaultsM2 extends RadioThemeData {
   late final ColorScheme _colors = _theme.colorScheme;
 
   @override
-  MaterialStateProperty<Color> get fillColor {
-    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.disabled)) {
+  WidgetStateProperty<Color> get fillColor {
+    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+      if (states.contains(WidgetState.disabled)) {
         return _theme.disabledColor;
       }
-      if (states.contains(MaterialState.selected)) {
+      if (states.contains(WidgetState.selected)) {
         return _colors.secondary;
       }
       return _theme.unselectedWidgetColor;
@@ -349,15 +248,15 @@ class _RadioDefaultsM2 extends RadioThemeData {
   }
 
   @override
-  MaterialStateProperty<Color> get overlayColor {
-    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.pressed)) {
+  WidgetStateProperty<Color> get overlayColor {
+    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+      if (states.contains(WidgetState.pressed)) {
         return fillColor.resolve(states).withAlpha(kRadialReactionAlpha);
       }
-      if (states.contains(MaterialState.hovered)) {
+      if (states.contains(WidgetState.hovered)) {
         return _theme.hoverColor;
       }
-      if (states.contains(MaterialState.focused)) {
+      if (states.contains(WidgetState.focused)) {
         return _theme.focusColor;
       }
       return Colors.transparent;
@@ -380,33 +279,33 @@ class _RadioDefaultsM3 extends RadioThemeData {
   late final ColorScheme _colors = _theme.colorScheme;
 
   @override
-  MaterialStateProperty<Color> get fillColor {
-    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        if (states.contains(MaterialState.disabled)) {
+  WidgetStateProperty<Color> get fillColor {
+    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
+        if (states.contains(WidgetState.disabled)) {
           return _colors.onSurface.withOpacity(0.38);
         }
-        if (states.contains(MaterialState.pressed)) {
+        if (states.contains(WidgetState.pressed)) {
           return _colors.primary;
         }
-        if (states.contains(MaterialState.hovered)) {
+        if (states.contains(WidgetState.hovered)) {
           return _colors.primary;
         }
-        if (states.contains(MaterialState.focused)) {
+        if (states.contains(WidgetState.focused)) {
           return _colors.primary;
         }
         return _colors.primary;
       }
-      if (states.contains(MaterialState.disabled)) {
+      if (states.contains(WidgetState.disabled)) {
         return _colors.onSurface.withOpacity(0.38);
       }
-      if (states.contains(MaterialState.pressed)) {
+      if (states.contains(WidgetState.pressed)) {
         return _colors.onSurface;
       }
-      if (states.contains(MaterialState.hovered)) {
+      if (states.contains(WidgetState.hovered)) {
         return _colors.onSurface;
       }
-      if (states.contains(MaterialState.focused)) {
+      if (states.contains(WidgetState.focused)) {
         return _colors.onSurface;
       }
       return _colors.onSurfaceVariant;
@@ -414,27 +313,27 @@ class _RadioDefaultsM3 extends RadioThemeData {
   }
 
   @override
-  MaterialStateProperty<Color> get overlayColor {
-    return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
-        if (states.contains(MaterialState.pressed)) {
+  WidgetStateProperty<Color> get overlayColor {
+    return WidgetStateProperty.resolveWith((Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
+        if (states.contains(WidgetState.pressed)) {
           return _colors.onSurface.withOpacity(0.1);
         }
-        if (states.contains(MaterialState.hovered)) {
+        if (states.contains(WidgetState.hovered)) {
           return _colors.primary.withOpacity(0.08);
         }
-        if (states.contains(MaterialState.focused)) {
+        if (states.contains(WidgetState.focused)) {
           return _colors.primary.withOpacity(0.1);
         }
         return Colors.transparent;
       }
-      if (states.contains(MaterialState.pressed)) {
+      if (states.contains(WidgetState.pressed)) {
         return _colors.primary.withOpacity(0.1);
       }
-      if (states.contains(MaterialState.hovered)) {
+      if (states.contains(WidgetState.hovered)) {
         return _colors.onSurface.withOpacity(0.08);
       }
-      if (states.contains(MaterialState.focused)) {
+      if (states.contains(WidgetState.focused)) {
         return _colors.onSurface.withOpacity(0.1);
       }
       return Colors.transparent;

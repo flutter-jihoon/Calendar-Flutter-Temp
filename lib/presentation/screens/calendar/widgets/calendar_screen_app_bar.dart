@@ -1,6 +1,6 @@
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icons.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -31,13 +31,13 @@ class CalendarScreenAppBar extends StatelessWidget
           InkWell(
             onTap: onExpandButtonPressed,
             customBorder: const CircleBorder(),
-            child: CalendarAppIcon.chevronDown(20),
+            child: CalendarAppSquareIcon.chevronDown(20),
           ),
         ],
       ),
       centerTitle: false,
       leading: IconButton(
-        icon: CalendarAppIcon.arrowLeftNavigation(24),
+        icon: CalendarAppSquareIcon.arrowLeftNavigation(24),
         onPressed: SystemNavigator.pop,
       ),
       actions: [
@@ -63,7 +63,7 @@ class CalendarScreenAppBar extends StatelessWidget
                   color: AppPalette.grey100,
                   shape: BoxShape.circle,
                 ),
-                child: CalendarAppIcon.calendar(16),
+                child: CalendarAppSquareIcon.calendar(16),
               ),
             ],
           ),
@@ -102,7 +102,7 @@ class CalendarScreenAppBar extends StatelessWidget
           ),
         ),
         IconButton(
-          icon: CalendarAppIcon.menu(24),
+          icon: CalendarAppSquareIcon.menu(24),
           onPressed: onMenuButtonPressed,
         ),
       ],

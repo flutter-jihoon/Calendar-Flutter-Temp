@@ -76,7 +76,7 @@ class TimespreadDatasourceImpl implements TimespreadDatasource {
   Future<List<ScheduleResponse>?> fetchSchedules() async {
     return await Future.delayed(Duration.zero, () {
       return List.generate(
-        10,
+        5,
         (index) => ScheduleResponse(
           title: '테스트 캘린더 ${index + 1}',
           scheduleId: index + 1,

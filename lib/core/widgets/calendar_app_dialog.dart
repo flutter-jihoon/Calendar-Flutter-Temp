@@ -5,15 +5,13 @@ import 'package:go_router/go_router.dart';
 
 class CalendarAppDialog extends StatelessWidget {
   final String? title;
-  final String? subtitle;
-  final Widget? content;
+  final String subtitle;
   final String primaryButtonText;
   final String? secondaryButtonText;
 
   const CalendarAppDialog({
     required this.title,
-    this.subtitle,
-    this.content,
+    required this.subtitle,
     required this.primaryButtonText,
     this.secondaryButtonText,
     super.key,
@@ -41,13 +39,11 @@ class CalendarAppDialog extends StatelessWidget {
                   SizedBox(height: 12),
                 ],
               ),
-            if (subtitle != null)
-              Text(
-                subtitle!,
-                style: AppTextStyles.style15Regular(height: 1.4),
-                textAlign: TextAlign.center,
-              ),
-            if (content != null) content!,
+            Text(
+              subtitle,
+              style: AppTextStyles.style15Regular(height: 1.4),
+              textAlign: TextAlign.center,
+            ),
             SizedBox(height: 28),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

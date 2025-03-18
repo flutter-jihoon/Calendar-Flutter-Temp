@@ -1,3 +1,5 @@
+import 'package:calendar_flutter/core/utils/log_util.dart';
+
 enum ServerType {
   test('test'),
   qa('qa'),
@@ -10,7 +12,10 @@ enum ServerType {
     final String serverType = json['serverType'];
     return ServerType.values.firstWhere(
       (e) => e.value == serverType,
-      orElse: () => throw Exception('정의되지 않은 서버 타입입니다: $serverType'),
+      orElse: () {
+        logger.e('정의되지 않은 서버 타입: $serverType');
+        throw Exception('정의되지 않은 서버 타입: $serverType');
+      },
     );
   }
 }

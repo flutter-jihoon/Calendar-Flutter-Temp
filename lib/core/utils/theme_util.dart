@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 abstract final class ThemeUtil {
   static ThemeData appThemeData = ThemeData(
-    primaryColor: AppPalette.primary,
+    useMaterial3: true,
     brightness: Brightness.light,
+    colorScheme: ColorScheme.fromSeed(seedColor: AppPalette.primary),
     unselectedWidgetColor: AppPalette.grey300,
     textTheme: TextTheme(
       displayLarge: TextStyle(color: AppPalette.grey700),
@@ -25,7 +26,6 @@ abstract final class ThemeUtil {
     ),
     scaffoldBackgroundColor: AppPalette.grey100,
     canvasColor: AppPalette.grey100,
-    dialogBackgroundColor: AppPalette.grey100,
     dialogTheme: const DialogTheme(
       backgroundColor: AppPalette.grey100,
       surfaceTintColor: Colors.transparent,

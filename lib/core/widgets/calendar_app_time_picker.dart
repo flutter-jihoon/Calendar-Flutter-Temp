@@ -1,16 +1,7 @@
-// ignore_for_file: implementation_imports
-
-library;
-
 import 'dart:math' as math;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter/widgets.dart';
-
-import 'package:flutter/src/cupertino/colors.dart';
-import 'package:flutter/src/cupertino/localizations.dart';
-import 'package:flutter/src/cupertino/picker.dart';
-import 'package:flutter/src/cupertino/theme.dart';
 
 const double _kItemExtent = 32.0;
 

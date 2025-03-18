@@ -30,11 +30,8 @@ class CalendarListNotifier extends AsyncNotifier<List<Calendar>> {
   @override
   Future<List<Calendar>> build() async {
     _calendarRepository = ref.watch(calendarRepositoryProvider);
-
     final List<Calendar>? result = await _calendarRepository.getCalendars();
-    if (result == null) {
-      throw Exception('캘린더가 없습니다.');
-    }
+    if (result == null) throw Exception('캘린더가 없습니다.');
     return result;
   }
 

@@ -1,8 +1,6 @@
 name: calendar_flutter
-description: "타임스프레드 캘린더 모듈 프로젝트"
-
+description: "플러터 캘린더 모듈 프로젝트"
 publish_to: "none"
-
 version: 1.0.0
 
 environment:

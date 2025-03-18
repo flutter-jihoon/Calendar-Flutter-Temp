@@ -1,3 +1,4 @@
+import 'package:calendar_flutter/core/utils/route_log_util.dart';
 import 'package:calendar_flutter/presentation/screens/calendar/calendar_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,7 @@ import 'package:calendar_flutter/presentation/screens/calendar_setting/calendar_
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     initialLocation: RoutePath.calendarSelectScreenRoute,
+    observers: [RouteLogger()],
     routes: [
       GoRoute(
         path: RoutePath.calendarSelectScreenRoute,

@@ -5,13 +5,13 @@ import 'package:calendar_flutter/core/enums/day_of_the_week.dart';
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_button.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icons.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
 class WeeklyCalendar extends ConsumerStatefulWidget {
-  final Calendar currentCalendar;
+  final Calendar? currentCalendar;
   const WeeklyCalendar({required this.currentCalendar, super.key});
 
   @override
@@ -244,11 +244,11 @@ class _WeeklyCalendarState extends ConsumerState<WeeklyCalendar> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CalendarAppIcon.closeNavigation(24),
+                  CalendarAppSquareIcon.closeNavigation(24),
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CalendarAppIcon.keyboard(24),
+                      CalendarAppSquareIcon.keyboard(24),
                       SizedBox(width: 5),
                       Text('상세 입력', style: AppTextStyles.style15Medium()),
                     ],
@@ -274,7 +274,7 @@ class _WeeklyCalendarState extends ConsumerState<WeeklyCalendar> {
               SizedBox(height: 16),
               Row(
                 children: [
-                  CalendarAppIcon.clock(20),
+                  CalendarAppSquareIcon.clock(20),
                   SizedBox(width: 6),
                   Text(
                     '2월 6일 목요일 오전 09:00 ~ 오후 12:00',

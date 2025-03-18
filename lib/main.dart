@@ -2,7 +2,6 @@ import 'package:calendar_flutter/calendar_app.dart';
 import 'package:calendar_flutter/core/enums/server_type.dart';
 import 'package:calendar_flutter/core/providers/current_user_provider.dart';
 import 'package:calendar_flutter/core/providers/server_type_provider.dart';
-import 'package:calendar_flutter/core/utils/log_util.dart';
 import 'package:calendar_flutter/core/utils/provider_log_util.dart';
 import 'package:calendar_flutter/domain/entities/current_user.dart';
 import 'package:flutter/foundation.dart';
@@ -17,8 +16,6 @@ void main() async {
   final CurrentUser currentUser = CurrentUser.fromJson(queryParameters);
   final ServerType serverType = ServerType.fromJson(queryParameters);
 
-  logger.i(currentUser);
-
   runApp(
     ProviderScope(
       observers: [ProviderLogger()],
@@ -32,10 +29,9 @@ void main() async {
 }
 
 Uri getInitialRoute() {
-  if (kReleaseMode) {
-    return Uri.parse(
-      WidgetsBinding.instance.platformDispatcher.defaultRouteName,
-    );
-  }
-  return Uri.parse('/?accessToken=accessToken&serverType=test');
+  return Uri.parse(
+    kReleaseMode
+        ? WidgetsBinding.instance.platformDispatcher.defaultRouteName
+        : '/?accessToken=accessToken&serverType=test',
+  );
 }

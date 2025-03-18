@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Calendar {
+  int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
 
   /// Create a copy of Calendar
@@ -30,7 +31,7 @@ abstract class $CalendarCopyWith<$Res> {
   factory $CalendarCopyWith(Calendar value, $Res Function(Calendar) then) =
       _$CalendarCopyWithImpl<$Res, Calendar>;
   @useResult
-  $Res call({String title});
+  $Res call({int id, String title});
 }
 
 /// @nodoc
@@ -48,9 +49,14 @@ class _$CalendarCopyWithImpl<$Res, $Val extends Calendar>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -67,7 +73,7 @@ abstract class _$$CalendarImplCopyWith<$Res>
       __$$CalendarImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title});
+  $Res call({int id, String title});
 }
 
 /// @nodoc
@@ -83,9 +89,14 @@ class __$$CalendarImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
   }) {
     return _then(_$CalendarImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -97,14 +108,16 @@ class __$$CalendarImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CalendarImpl implements _Calendar {
-  const _$CalendarImpl({required this.title});
+  const _$CalendarImpl({required this.id, required this.title});
 
+  @override
+  final int id;
   @override
   final String title;
 
   @override
   String toString() {
-    return 'Calendar(title: $title)';
+    return 'Calendar(id: $id, title: $title)';
   }
 
   @override
@@ -112,11 +125,12 @@ class _$CalendarImpl implements _Calendar {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CalendarImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, title);
+  int get hashCode => Object.hash(runtimeType, id, title);
 
   /// Create a copy of Calendar
   /// with the given fields replaced by the non-null parameter values.
@@ -128,8 +142,11 @@ class _$CalendarImpl implements _Calendar {
 }
 
 abstract class _Calendar implements Calendar {
-  const factory _Calendar({required final String title}) = _$CalendarImpl;
+  const factory _Calendar(
+      {required final int id, required final String title}) = _$CalendarImpl;
 
+  @override
+  int get id;
   @override
   String get title;
 

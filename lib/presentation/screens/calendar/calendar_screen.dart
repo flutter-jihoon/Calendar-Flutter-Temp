@@ -1,9 +1,6 @@
 import 'package:calendar_flutter/core/constants/route_path.dart';
-import 'package:calendar_flutter/core/utils/color_util.dart';
-import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_date_picker.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icon_button.dart';
-import 'package:calendar_flutter/core/widgets/calendar_app_icons.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
 import 'package:calendar_flutter/presentation/providers/calendar_list_provider.dart';
 import 'package:calendar_flutter/presentation/screens/calendar/widgets/calendar_screen_app_bar.dart';
@@ -11,7 +8,6 @@ import 'package:calendar_flutter/presentation/screens/calendar/widgets/calendar_
 import 'package:calendar_flutter/presentation/screens/calendar/widgets/weekly_calendar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class CalendarScreen extends ConsumerStatefulWidget {
@@ -41,7 +37,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           onExpandButtonPressed: () {
             setState(() => _isWeekPickerExpanded = !_isWeekPickerExpanded);
           },
-          onMenuButtonPressed: _scaffoldKey.currentState!.openEndDrawer,
+          onMenuButtonPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
         ),
         endDrawer: CalendarScreenDrawer(data: data),
         body: SafeArea(
@@ -65,7 +61,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     ),
                   ),
                   Expanded(
-                    child: WeeklyCalendar(currentCalendar: currentCalendar!),
+                    child: WeeklyCalendar(currentCalendar: currentCalendar),
                   ),
                 ],
               ),
@@ -76,7 +72,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   onPressed: () {
                     context.goNamed(RoutePath.addScheduleScreenRoute);
                   },
-                  child: CalendarAppIcon.plusWhite(32),
+                  child: CalendarAppSquareIcon.plusWhite(32),
                 ),
               ),
             ],
