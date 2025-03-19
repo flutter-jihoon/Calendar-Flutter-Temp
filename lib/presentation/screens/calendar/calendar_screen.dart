@@ -61,7 +61,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     ),
                   ),
                   Expanded(
-                    child: WeeklyCalendar(currentCalendar: currentCalendar),
+                    child: WeeklyCalendar(
+                      currentCalendar: currentCalendar,
+                    ),
                   ),
                 ],
               ),

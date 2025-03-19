@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 
 const Duration _monthScrollDuration = Duration(milliseconds: 200);
 
-const double _dayPickerRowHeight = 42.0;
+const double _dayPickerRowHeight = 32.0;
 const int _maxDayPickerRowCount = 6;
 
 const double _maxDayPickerHeight =
@@ -19,7 +19,6 @@ const double _yearPickerPadding = 16.0;
 const double _yearPickerRowHeight = 52.0;
 const double _yearPickerRowSpacing = 8.0;
 
-const double _subHeaderHeight = 52.0;
 const double _monthNavButtonsWidth = 108.0;
 
 class CalendarAppDatePicker extends StatefulWidget {
@@ -215,16 +214,13 @@ class _CalendarAppDatePickerState extends State<CalendarAppDatePicker> {
           selectableDayPredicate: widget.selectableDayPredicate,
         );
       case DatePickerMode.year:
-        return Padding(
-          padding: const EdgeInsets.only(top: _subHeaderHeight),
-          child: YearPicker(
-            key: _yearPickerKey,
-            currentDate: widget.currentDate,
-            firstDate: widget.firstDate,
-            lastDate: widget.lastDate,
-            selectedDate: _currentDisplayedMonthDate,
-            onChanged: _handleYearChanged,
-          ),
+        return YearPicker(
+          key: _yearPickerKey,
+          currentDate: widget.currentDate,
+          firstDate: widget.firstDate,
+          lastDate: widget.lastDate,
+          selectedDate: _currentDisplayedMonthDate,
+          onChanged: _handleYearChanged,
         );
     }
   }
@@ -234,13 +230,9 @@ class _CalendarAppDatePickerState extends State<CalendarAppDatePicker> {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasMaterialLocalizations(context));
     assert(debugCheckHasDirectionality(context));
-    return Stack(
-      children: <Widget>[
-        SizedBox(
-          height: _subHeaderHeight + _maxDayPickerHeight,
-          child: _buildPicker(),
-        ),
-      ],
+    return SizedBox(
+      height: _maxDayPickerHeight,
+      child: _buildPicker(),
     );
   }
 }
@@ -299,54 +291,47 @@ class _DatePickerModeToggleButtonState
     final TextTheme textTheme = Theme.of(context).textTheme;
     final Color controlColor = colorScheme.onSurface.withOpacity(0.60);
 
-    return SizedBox(
-      height: _subHeaderHeight,
-      child: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 16, end: 4),
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              child: Semantics(
-                label:
-                    MaterialLocalizations.of(context).selectYearSemanticsLabel,
-                excludeSemantics: true,
-                button: true,
-                container: true,
-                child: SizedBox(
-                  height: _subHeaderHeight,
-                  child: InkWell(
-                    onTap: widget.onTitlePressed,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Flexible(
-                            child: Text(
-                              widget.title,
-                              overflow: TextOverflow.ellipsis,
-                              style: textTheme.titleSmall?.copyWith(
-                                color: controlColor,
-                              ),
-                            ),
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(start: 16, end: 4),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: Semantics(
+              label: MaterialLocalizations.of(context).selectYearSemanticsLabel,
+              excludeSemantics: true,
+              button: true,
+              container: true,
+              child: InkWell(
+                onTap: widget.onTitlePressed,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
+                    children: <Widget>[
+                      Flexible(
+                        child: Text(
+                          widget.title,
+                          overflow: TextOverflow.ellipsis,
+                          style: textTheme.titleSmall?.copyWith(
+                            color: controlColor,
                           ),
-                          RotationTransition(
-                            turns: _controller,
-                            child: Icon(
-                              Icons.arrow_drop_down,
-                              color: controlColor,
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
+                      RotationTransition(
+                        turns: _controller,
+                        child: Icon(
+                          Icons.arrow_drop_down,
+                          color: controlColor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            if (widget.mode == DatePickerMode.day)
-              const SizedBox(width: _monthNavButtonsWidth),
-          ],
-        ),
+          ),
+          if (widget.mode == DatePickerMode.day)
+            const SizedBox(width: _monthNavButtonsWidth),
+        ],
       ),
     );
   }
@@ -774,8 +759,11 @@ class _DayPickerState extends State<_DayPicker> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: _monthPickerHorizontalPadding,
+      padding: const EdgeInsets.fromLTRB(
+        _monthPickerHorizontalPadding,
+        5,
+        _monthPickerHorizontalPadding,
+        20,
       ),
       child: GridView.custom(
         physics: const ClampingScrollPhysics(),

@@ -113,30 +113,28 @@ abstract final class ThemeUtil {
       selectedTileColor: AppPalette.grey300,
     ),
     datePickerTheme: DatePickerThemeData(
-      weekdayStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+      weekdayStyle: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: AppPalette.grey700,
+      ),
       dayBackgroundColor:
           WidgetStateProperty.resolveWith((Set<WidgetState> states) {
-        return states.contains(WidgetState.selected) ? AppPalette.bg01 : null;
+        return states.contains(WidgetState.selected)
+            ? AppPalette.bg01
+            : AppPalette.grey100;
       }),
       dayForegroundColor:
           WidgetStateProperty.resolveWith((Set<WidgetState> states) {
         return states.contains(WidgetState.selected)
             ? AppPalette.primary
-            : null;
+            : AppPalette.grey700;
       }),
-      dayShape: WidgetStateProperty.resolveWith((Set<WidgetState> states) {
-        return states.contains(WidgetState.selected)
-            ? CircleBorder(
-                side: BorderSide(
-                  color: AppPalette.primary,
-                  width: 2,
-                ),
-              )
-            : null;
-      }),
+      dayShape: WidgetStateProperty.all(CircleBorder()),
       dayStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
       todayBackgroundColor: WidgetStateProperty.all(AppPalette.primary),
       todayForegroundColor: WidgetStateProperty.all(AppPalette.grey100),
+      todayBorder: BorderSide.none,
     ),
     dividerColor: AppPalette.divider,
   );

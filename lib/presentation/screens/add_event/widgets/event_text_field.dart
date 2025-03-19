@@ -55,7 +55,6 @@ class _EventTextFieldState extends State<EventTextField> {
               child: Container(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
-                  vertical: 20,
                 ),
                 child: Center(
                   child: Text(

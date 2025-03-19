@@ -44,7 +44,10 @@ class _ColorPaletteState extends State<ColorPalette>
             ),
             initiallyExpanded: _isExpanded,
             onExpansionChanged: (value) => setState(() => _isExpanded = value),
-            visualDensity: VisualDensity(horizontal: 0, vertical: -4),
+            visualDensity: VisualDensity(
+              horizontal: VisualDensity.minimumDensity,
+              vertical: VisualDensity.minimumDensity,
+            ),
             tilePadding: EdgeInsets.zero,
             shape: const Border(),
             title: Padding(
