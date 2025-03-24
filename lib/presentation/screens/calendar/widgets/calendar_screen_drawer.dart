@@ -1,4 +1,5 @@
 import 'package:calendar_flutter/core/constants/route_path.dart';
+import 'package:calendar_flutter/core/utils/log_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_checkbox_list_tile.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_divider.dart';
@@ -6,6 +7,8 @@ import 'package:calendar_flutter/core/widgets/calendar_app_icon_button.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_input_dialog.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_switch.dart';
+import 'package:calendar_flutter/domain/entities/timetable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
@@ -32,6 +35,11 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
   @override
   Widget build(BuildContext context) {
     final Calendar? currentCalendar = ref.watch(currentCalendarProvider);
+
+    final List<Timetable> timetables = List.generate(4, (index) {
+      return Timetable(id: index, title: '테스트 시간표 ${index + 1}');
+    });
+
     return Drawer(
       shape: Theme.of(context).drawerTheme.shape,
       child: SingleChildScrollView(
@@ -170,10 +178,7 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '기타',
-                        style: AppTextStyles.style13Medium(),
-                      ),
+                      Text('기타', style: AppTextStyles.style13Medium()),
                       SizedBox(height: 12),
                       CalendarAppCheckboxListTile(
                         title: Text(
@@ -189,53 +194,68 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                   ),
                 ),
                 CalendarAppDivider(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 19.5),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('시간표 리스트', style: AppTextStyles.style13Medium()),
-                      SizedBox(height: 12),
-                      ListView.separated(
-                        physics: ClampingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return Center(
-                            child: CalendarAppCheckboxListTile(
-                              title: Text(
-                                '공휴일',
-                                style: AppTextStyles.style15Medium(),
+                if (timetables.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 19.5),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('시간표 리스트', style: AppTextStyles.style13Medium()),
+                        SizedBox(height: 12),
+                        ListView.separated(
+                          physics: ClampingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: timetables.length,
+                          itemBuilder: (context, index) {
+                            return Center(
+                              child: CalendarAppCheckboxListTile(
+                                title: Text(
+                                  timetables[index].title,
+                                  style: AppTextStyles.style15Medium(),
+                                ),
+                                // TODO: 시간표 연동 여부 구현
+                                value: false,
+                                onChanged: (value) {
+                                  // TODO: 시간표 연동 로직 구현
+                                  if (value ?? false) {
+                                    logger.i(
+                                      '시간표 "${timetables[index].title}" 연동',
+                                    );
+                                  }
+                                },
                               ),
-                              value: _showHoliday,
-                              onChanged: (value) {
-                                setState(() => _showHoliday = value!);
-                              },
-                            ),
-                          );
-                        },
-                        separatorBuilder: (_, __) => const SizedBox(height: 8),
-                      ),
-                    ],
+                            );
+                          },
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 8),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 CalendarAppDivider(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 19.5),
-                  child: Row(
-                    children: [
-                      CalendarAppSquareIcon.logoGoogle(20),
-                      SizedBox(width: 8),
-                      Text(
-                        'Google 캘린더 연동',
-                        style: AppTextStyles.style15Medium(),
-                      ),
-                      Spacer(),
-                      CalendarAppSwitch(value: false, onChanged: (value) {}),
-                    ],
+                if (defaultTargetPlatform == TargetPlatform.android)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 19.5),
+                    child: Row(
+                      children: [
+                        CalendarAppSquareIcon.logoGoogle(20),
+                        SizedBox(width: 8),
+                        Text(
+                          'Google 캘린더 연동',
+                          style: AppTextStyles.style15Medium(),
+                        ),
+                        Spacer(),
+                        CalendarAppSwitch(
+                          value: false,
+                          onChanged: (value) {
+                            // TODO: Host API 호출
+                            if (value) logger.i('Google 캘린더 연동 Host API 호출');
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ],
             ),
           ),

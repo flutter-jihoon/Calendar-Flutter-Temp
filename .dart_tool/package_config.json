@@ -278,6 +278,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "fluttertoast",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/fluttertoast-8.2.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "freezed",
       "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/freezed-2.5.7",
       "packageUri": "lib/",
@@ -764,7 +770,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-03-18T01:28:03.596223Z",
+  "generated": "2025-03-24T00:27:57.683724Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/limji/development/sdk/fluttersdk/flutter",

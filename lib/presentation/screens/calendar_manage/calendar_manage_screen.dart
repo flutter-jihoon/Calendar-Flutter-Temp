@@ -2,6 +2,7 @@ import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_dialog.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_input_dialog.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
 import 'package:calendar_flutter/presentation/providers/calendar_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,7 +62,7 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
-                              icon: Icon(Icons.edit_outlined),
+                              icon: CalendarAppSquareIcon.edit(20),
                               onPressed: () async {
                                 final TextEditingController
                                     textEditingController =
@@ -87,7 +88,7 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
                               },
                             ),
                             IconButton(
-                              icon: Icon(Icons.delete_outlined),
+                              icon: CalendarAppSquareIcon.delete(20),
                               onPressed: () async {
                                 final bool? result = await showDialog<bool>(
                                   context: context,
@@ -109,7 +110,7 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
                             ),
                             ReorderableDragStartListener(
                               index: index,
-                              child: Icon(Icons.drag_handle),
+                              child: CalendarAppSquareIcon.move(20),
                             )
                           ],
                         ),

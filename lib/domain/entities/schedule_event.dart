@@ -7,10 +7,11 @@ class ScheduleEvent with _$ScheduleEvent {
   const factory ScheduleEvent({
     required int scheduleId,
     required int eventId,
+    required DateTime createdAt,
     required bool isRecurring,
     required bool isAllDay,
-    required String originalInstanceStartDate,
-    required String originalInstanceEndDate,
+    required DateTime originalInstanceStartDate,
+    required DateTime originalInstanceEndDate,
     required String title,
     required String location,
     required int colorType,

@@ -20,11 +20,13 @@ sealed class CalendarAppSquareIcon extends StatelessWidget {
       _ChevronRightIcon(size);
   factory CalendarAppSquareIcon.chevronUp(double size) => _ChevronUpIcon(size);
   factory CalendarAppSquareIcon.delete(double size) => _DeleteIcon(size);
+  factory CalendarAppSquareIcon.edit(double size) => _EditIcon(size);
   factory CalendarAppSquareIcon.keyboard(double size) => _KeyboardIcon(size);
   factory CalendarAppSquareIcon.lock(double size) => _LockIcon(size);
   factory CalendarAppSquareIcon.logoGoogle(double size) =>
       _LogoGoogleIcon(size);
   factory CalendarAppSquareIcon.menu(double size) => _MenuIcon(size);
+  factory CalendarAppSquareIcon.move(double size) => _MoveIcon(size);
   factory CalendarAppSquareIcon.plus(double size) => _PlusIcon(size);
   factory CalendarAppSquareIcon.plusWhite(double size) => _PlusWhiteIcon(size);
   factory CalendarAppSquareIcon.repeat(double size) => _RepeatIcon(size);
@@ -185,6 +187,20 @@ final class _DeleteIcon extends CalendarAppSquareIcon {
   }
 }
 
+final class _EditIcon extends CalendarAppSquareIcon {
+  final double size;
+  const _EditIcon(this.size);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'packages/calendar_flutter/assets/icons/edit.webp',
+      width: size,
+      height: size,
+    );
+  }
+}
+
 final class _KeyboardIcon extends CalendarAppSquareIcon {
   final double size;
   const _KeyboardIcon(this.size);
@@ -235,6 +251,20 @@ final class _MenuIcon extends CalendarAppSquareIcon {
   Widget build(BuildContext context) {
     return Image.asset(
       'packages/calendar_flutter/assets/icons/menu.webp',
+      width: size,
+      height: size,
+    );
+  }
+}
+
+final class _MoveIcon extends CalendarAppSquareIcon {
+  final double size;
+  const _MoveIcon(this.size);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'packages/calendar_flutter/assets/icons/move.webp',
       width: size,
       height: size,
     );

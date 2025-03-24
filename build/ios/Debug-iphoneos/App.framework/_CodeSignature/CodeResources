@@ -10,11 +10,11 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		HdIFo9a9nCb3dShDNtVlWrXSV5Y=
+		0eCUCMfke9KwIXTqr+0OQXOsgM4=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		hEO+CB9Ex9qG6X92dCwfxMf+bz4=
+		YDDl8EwrQojo6rK48r+z9Bsoq3I=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		KkOlU4b5Zmy1Jk/kkijChzdPWlQ=
+		vyOiDu9FJ/oE6sZjwxb208iWy4o=
 		</data>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		AavRQ3C9XXZyS/02Y0r+tCDqJ70=
+		vl6umqiXuiW2a60/EmZ7TGeRl6I=
 		</data>
 		<key>flutter_assets/packages/calendar_flutter/assets/icons/arrow_left_navigation.webp</key>
 		<data>
@@ -80,6 +80,10 @@
 		<data>
 		O+oAt75WTdHQT48Xo/JQc9lvpiw=
 		</data>
+		<key>flutter_assets/packages/calendar_flutter/assets/icons/edit.webp</key>
+		<data>
+		Yx3Mew4jrv5vsGQuje26qdg9rnA=
+		</data>
 		<key>flutter_assets/packages/calendar_flutter/assets/icons/keyboard.webp</key>
 		<data>
 		wRNQ/KWJLNX/IpON4n6K5ipO05A=
@@ -95,6 +99,10 @@
 		<key>flutter_assets/packages/calendar_flutter/assets/icons/menu.webp</key>
 		<data>
 		QeTgjucVu5zEHzv6f1hyBxYcb4c=
+		</data>
+		<key>flutter_assets/packages/calendar_flutter/assets/icons/move.webp</key>
+		<data>
+		SbGPWfQZl/P5lynPRgSbzc+EsY0=
 		</data>
 		<key>flutter_assets/packages/calendar_flutter/assets/icons/plus.webp</key>
 		<data>
@@ -156,6 +164,14 @@
 		<data>
 		Bvk+P1ykE1PGRdktwgwDyz6AOqM=
 		</data>
+		<key>flutter_assets/packages/fluttertoast/assets/toastify.css</key>
+		<data>
+		HVkEhoid+n6bwOYCwZg4DdmGBHY=
+		</data>
+		<key>flutter_assets/packages/fluttertoast/assets/toastify.js</key>
+		<data>
+		v5LMft1C/Ps/+tw6D+zco3p3Urk=
+		</data>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
 		<data>
 		VoVnsu58hN7wrwazX0nyAopiB0Q=
@@ -171,14 +187,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			OEM3gjCp3mUR6gwPSnPS+vcWeLmDBcc48eHY9dtWNfs=
+			tsNoUsxTESQ2B0w2etF6z3nmBJqj94/UWY7uub28IMw=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			+CCwLpuXgm3WJt7eeRSfqkf4CVdvMJYVtkYAXGT3Ei0=
+			KWW6ErvuiOyVwKeavDk7Z47jBcGVUG483yEfLSCD6q4=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
@@ -192,7 +208,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			rJhyP4f8TTCQRCYC6LrMX6tBbnWCC0Ufc39lyKHzT0U=
+			MVScyq8/a9n3w3qZ95NPOGPb5Okl0cnamI48rZ8XmK8=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.otf</key>
@@ -213,7 +229,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			PR4bCp+RM9CEVuJvCYyy1dV9/Hl+YXmio5sx+b++nRo=
+			N9avhS6VkyaxX8EFRZ7kuDSsYawIbTXa4ViP1q/G9Lc=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/calendar_flutter/assets/icons/arrow_left_navigation.webp</key>
@@ -293,6 +309,13 @@
 			26jVC4ANVURKj14ahR5RgdmVWhsAtIf6YDPx78i2jSY=
 			</data>
 		</dict>
+		<key>flutter_assets/packages/calendar_flutter/assets/icons/edit.webp</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			tAwAJxN0WLPHjfHbL0BcU0ANAdScW5aD4KCLIRfK1No=
+			</data>
+		</dict>
 		<key>flutter_assets/packages/calendar_flutter/assets/icons/keyboard.webp</key>
 		<dict>
 			<key>hash2</key>
@@ -319,6 +342,13 @@
 			<key>hash2</key>
 			<data>
 			MHvuoXDzJoTr/YorUrCV19BTLWiokjcAqJH2WiCZM8c=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/calendar_flutter/assets/icons/move.webp</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			5lXueWS5rjb6BaTbm4E7clF0VXbk0Cxvf3UiZUqZqNM=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/calendar_flutter/assets/icons/plus.webp</key>
@@ -424,6 +454,20 @@
 			<key>hash2</key>
 			<data>
 			Z8RP6Rg7AC553ef2l34piGYcmj5KPF/OloeH79vtgjw=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/fluttertoast/assets/toastify.css</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			abr0T+pbPv0zd7q8FU7xuDv4JjuRAgKox9bnRddRNJ8=
+			</data>
+		</dict>
+		<key>flutter_assets/packages/fluttertoast/assets/toastify.js</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			CRyacJlKIATuArBPER1Aq+QMB7BmhWOZ9YxYcELsKZA=
 			</data>
 		</dict>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>

@@ -64,7 +64,7 @@ linter:
 
 analyzer: 
   exclude: 
-    - test/**
+    # - test/**
     - lib/**.g.dart
     - lib/**.freezed.dart
   language: 

@@ -18,10 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ScheduleEvent {
   int get scheduleId => throw _privateConstructorUsedError;
   int get eventId => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   bool get isRecurring => throw _privateConstructorUsedError;
   bool get isAllDay => throw _privateConstructorUsedError;
-  String get originalInstanceStartDate => throw _privateConstructorUsedError;
-  String get originalInstanceEndDate => throw _privateConstructorUsedError;
+  DateTime get originalInstanceStartDate => throw _privateConstructorUsedError;
+  DateTime get originalInstanceEndDate => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get location => throw _privateConstructorUsedError;
   int get colorType => throw _privateConstructorUsedError;
@@ -45,10 +46,11 @@ abstract class $ScheduleEventCopyWith<$Res> {
   $Res call(
       {int scheduleId,
       int eventId,
+      DateTime createdAt,
       bool isRecurring,
       bool isAllDay,
-      String originalInstanceStartDate,
-      String originalInstanceEndDate,
+      DateTime originalInstanceStartDate,
+      DateTime originalInstanceEndDate,
       String title,
       String location,
       int colorType,
@@ -74,6 +76,7 @@ class _$ScheduleEventCopyWithImpl<$Res, $Val extends ScheduleEvent>
   $Res call({
     Object? scheduleId = null,
     Object? eventId = null,
+    Object? createdAt = null,
     Object? isRecurring = null,
     Object? isAllDay = null,
     Object? originalInstanceStartDate = null,
@@ -94,6 +97,10 @@ class _$ScheduleEventCopyWithImpl<$Res, $Val extends ScheduleEvent>
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isRecurring: null == isRecurring
           ? _value.isRecurring
           : isRecurring // ignore: cast_nullable_to_non_nullable
@@ -105,11 +112,11 @@ class _$ScheduleEventCopyWithImpl<$Res, $Val extends ScheduleEvent>
       originalInstanceStartDate: null == originalInstanceStartDate
           ? _value.originalInstanceStartDate
           : originalInstanceStartDate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
       originalInstanceEndDate: null == originalInstanceEndDate
           ? _value.originalInstanceEndDate
           : originalInstanceEndDate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -149,10 +156,11 @@ abstract class _$$ScheduleEventImplCopyWith<$Res>
   $Res call(
       {int scheduleId,
       int eventId,
+      DateTime createdAt,
       bool isRecurring,
       bool isAllDay,
-      String originalInstanceStartDate,
-      String originalInstanceEndDate,
+      DateTime originalInstanceStartDate,
+      DateTime originalInstanceEndDate,
       String title,
       String location,
       int colorType,
@@ -176,6 +184,7 @@ class __$$ScheduleEventImplCopyWithImpl<$Res>
   $Res call({
     Object? scheduleId = null,
     Object? eventId = null,
+    Object? createdAt = null,
     Object? isRecurring = null,
     Object? isAllDay = null,
     Object? originalInstanceStartDate = null,
@@ -196,6 +205,10 @@ class __$$ScheduleEventImplCopyWithImpl<$Res>
           ? _value.eventId
           : eventId // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       isRecurring: null == isRecurring
           ? _value.isRecurring
           : isRecurring // ignore: cast_nullable_to_non_nullable
@@ -207,11 +220,11 @@ class __$$ScheduleEventImplCopyWithImpl<$Res>
       originalInstanceStartDate: null == originalInstanceStartDate
           ? _value.originalInstanceStartDate
           : originalInstanceStartDate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
       originalInstanceEndDate: null == originalInstanceEndDate
           ? _value.originalInstanceEndDate
           : originalInstanceEndDate // ignore: cast_nullable_to_non_nullable
-              as String,
+              as DateTime,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -246,6 +259,7 @@ class _$ScheduleEventImpl implements _ScheduleEvent {
   const _$ScheduleEventImpl(
       {required this.scheduleId,
       required this.eventId,
+      required this.createdAt,
       required this.isRecurring,
       required this.isAllDay,
       required this.originalInstanceStartDate,
@@ -263,13 +277,15 @@ class _$ScheduleEventImpl implements _ScheduleEvent {
   @override
   final int eventId;
   @override
+  final DateTime createdAt;
+  @override
   final bool isRecurring;
   @override
   final bool isAllDay;
   @override
-  final String originalInstanceStartDate;
+  final DateTime originalInstanceStartDate;
   @override
-  final String originalInstanceEndDate;
+  final DateTime originalInstanceEndDate;
   @override
   final String title;
   @override
@@ -292,7 +308,7 @@ class _$ScheduleEventImpl implements _ScheduleEvent {
 
   @override
   String toString() {
-    return 'ScheduleEvent(scheduleId: $scheduleId, eventId: $eventId, isRecurring: $isRecurring, isAllDay: $isAllDay, originalInstanceStartDate: $originalInstanceStartDate, originalInstanceEndDate: $originalInstanceEndDate, title: $title, location: $location, colorType: $colorType, isScreenLockMode: $isScreenLockMode, notificationSettingType: $notificationSettingType, memo: $memo)';
+    return 'ScheduleEvent(scheduleId: $scheduleId, eventId: $eventId, createdAt: $createdAt, isRecurring: $isRecurring, isAllDay: $isAllDay, originalInstanceStartDate: $originalInstanceStartDate, originalInstanceEndDate: $originalInstanceEndDate, title: $title, location: $location, colorType: $colorType, isScreenLockMode: $isScreenLockMode, notificationSettingType: $notificationSettingType, memo: $memo)';
   }
 
   @override
@@ -303,6 +319,8 @@ class _$ScheduleEventImpl implements _ScheduleEvent {
             (identical(other.scheduleId, scheduleId) ||
                 other.scheduleId == scheduleId) &&
             (identical(other.eventId, eventId) || other.eventId == eventId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.isRecurring, isRecurring) ||
                 other.isRecurring == isRecurring) &&
             (identical(other.isAllDay, isAllDay) ||
@@ -331,6 +349,7 @@ class _$ScheduleEventImpl implements _ScheduleEvent {
       runtimeType,
       scheduleId,
       eventId,
+      createdAt,
       isRecurring,
       isAllDay,
       originalInstanceStartDate,
@@ -355,10 +374,11 @@ abstract class _ScheduleEvent implements ScheduleEvent {
   const factory _ScheduleEvent(
       {required final int scheduleId,
       required final int eventId,
+      required final DateTime createdAt,
       required final bool isRecurring,
       required final bool isAllDay,
-      required final String originalInstanceStartDate,
-      required final String originalInstanceEndDate,
+      required final DateTime originalInstanceStartDate,
+      required final DateTime originalInstanceEndDate,
       required final String title,
       required final String location,
       required final int colorType,
@@ -371,13 +391,15 @@ abstract class _ScheduleEvent implements ScheduleEvent {
   @override
   int get eventId;
   @override
+  DateTime get createdAt;
+  @override
   bool get isRecurring;
   @override
   bool get isAllDay;
   @override
-  String get originalInstanceStartDate;
+  DateTime get originalInstanceStartDate;
   @override
-  String get originalInstanceEndDate;
+  DateTime get originalInstanceEndDate;
   @override
   String get title;
   @override

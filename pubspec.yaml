@@ -23,6 +23,8 @@ dependencies:
   drift_flutter: ^0.2.4
   path_provider: ^2.1.5
   shared_preferences: ^2.5.2
+  intl: ^0.19.0
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   flutter_test:
@@ -50,10 +52,12 @@ flutter:
     - packages/calendar_flutter/assets/icons/chevron_right.webp
     - packages/calendar_flutter/assets/icons/chevron_up.webp
     - packages/calendar_flutter/assets/icons/delete.webp
+    - packages/calendar_flutter/assets/icons/edit.webp
     - packages/calendar_flutter/assets/icons/keyboard.webp
     - packages/calendar_flutter/assets/icons/lock.webp
     - packages/calendar_flutter/assets/icons/logo_google.webp
     - packages/calendar_flutter/assets/icons/menu.webp
+    - packages/calendar_flutter/assets/icons/move.webp
     - packages/calendar_flutter/assets/icons/plus.webp
     - packages/calendar_flutter/assets/icons/plus_white.webp
     - packages/calendar_flutter/assets/icons/repeat.webp

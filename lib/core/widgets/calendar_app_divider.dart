@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 
 class CalendarAppDivider extends StatelessWidget {
   final double indent;
+  final Color color;
 
-  const CalendarAppDivider({super.key, this.indent = 0});
+  const CalendarAppDivider({
+    super.key,
+    this.indent = 0,
+    this.color = AppPalette.divider,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class CalendarAppDivider extends StatelessWidget {
       thickness: 1,
       indent: indent,
       endIndent: indent,
-      color: AppPalette.divider,
+      color: color,
     );
   }
 }

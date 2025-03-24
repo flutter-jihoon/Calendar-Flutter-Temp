@@ -11,12 +11,16 @@ class CalendarScreenAppBar extends StatelessWidget
 
   final String title;
   final VoidCallback onExpandButtonPressed;
+  final VoidCallback onTodayButtonPressed;
   final VoidCallback onMenuButtonPressed;
+  final bool isExpanded;
 
   CalendarScreenAppBar({
     required this.title,
     required this.onExpandButtonPressed,
+    required this.onTodayButtonPressed,
     required this.onMenuButtonPressed,
+    required this.isExpanded,
     super.key,
   });
 
@@ -31,7 +35,12 @@ class CalendarScreenAppBar extends StatelessWidget
           InkWell(
             onTap: onExpandButtonPressed,
             customBorder: const CircleBorder(),
-            child: CalendarAppSquareIcon.chevronDown(20),
+            child: AnimatedRotation(
+              turns: isExpanded ? -0.5 : 0,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeInOut,
+              child: CalendarAppSquareIcon.chevronDown(20),
+            ),
           ),
         ],
       ),
@@ -70,7 +79,7 @@ class CalendarScreenAppBar extends StatelessWidget
         ),
         SizedBox(width: 15),
         IconButton(
-          onPressed: () {},
+          onPressed: onTodayButtonPressed,
           icon: SizedBox(
             width: 24,
             height: 24,

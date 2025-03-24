@@ -12,6 +12,7 @@ import 'package:calendar_flutter/presentation/screens/add_event/widgets/color_pa
 import 'package:calendar_flutter/presentation/screens/add_event/widgets/event_switch_tile.dart';
 import 'package:calendar_flutter/presentation/screens/add_event/widgets/event_text_field.dart';
 import 'package:calendar_flutter/presentation/screens/add_event/widgets/event_tile.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -172,15 +173,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
                         onTap: () => context
                             .goNamed(RoutePath.notificationSettingScreenRoute),
                       ),
-                      EventSwitchTile(
-                        iconPath:
-                            'packages/calendar_flutter/assets/icons/lock.webp',
-                        label: '꽉잠금 모드',
-                        value: _isScreenLockMode,
-                        onChanged: (bool value) {
-                          setState(() => _isScreenLockMode = value);
-                        },
-                      ),
+                      if (defaultTargetPlatform == TargetPlatform.android)
+                        EventSwitchTile(
+                          iconPath:
+                              'packages/calendar_flutter/assets/icons/lock.webp',
+                          label: '꽉잠금 모드',
+                          value: _isScreenLockMode,
+                          onChanged: (bool value) {
+                            setState(() => _isScreenLockMode = value);
+                          },
+                        ),
                       ColorPalette(),
                       EventTextField(
                         controller: _memoController,
