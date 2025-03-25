@@ -1,5 +1,6 @@
 import 'package:calendar_flutter/core/utils/route_log_util.dart';
 import 'package:calendar_flutter/presentation/screens/calendar/calendar_screen.dart';
+import 'package:calendar_flutter/presentation/screens/repeat_end_setting/repeat_end_setting_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -35,6 +36,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 path: RoutePath.repeatSettingScreenRoute,
                 name: RoutePath.repeatSettingScreenRoute,
                 builder: (_, __) => const RepeatSettingScreen(),
+                routes: [
+                  GoRoute(
+                    path: RoutePath.repeatEndSettingScreenRoute,
+                    name: RoutePath.repeatEndSettingScreenRoute,
+                    builder: (_, __) => const RepeatEndSettingScreen(),
+                  ),
+                ],
               ),
               GoRoute(
                 path: RoutePath.notificationSettingScreenRoute,

@@ -1,6 +1,6 @@
 import 'package:calendar_flutter/core/enums/day_of_the_week.dart';
 import 'package:calendar_flutter/core/utils/date_time_util.dart';
-import 'package:calendar_flutter/core/utils/log_util.dart';
+import 'package:calendar_flutter/presentation/screens/calendar/widgets/weekly_calendar/event_list_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:calendar_flutter/domain/entities/schedule_event.dart';
 import 'package:calendar_flutter/core/utils/color_util.dart';
@@ -56,12 +56,12 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
     // --- 행 배치
     const int maxRows = 2;
     final List<List<ScheduleEvent>> rows = List.generate(maxRows, (_) => []);
-    final List<ScheduleEvent> overflow = [];
+    final List<List<ScheduleEvent>> overflowRow =
+        List.generate(DayOfTheWeek.values.length, (_) => []);
 
     for (final event in filteredEvents) {
       bool placed = false;
       for (final row in rows) {
-        // TODO: row.last가 아니라 row 안의 모든 event에 대해 확인해야 함
         if (row.isEmpty) {
           row.add(event);
           placed = true;
@@ -70,8 +70,6 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
         bool isOverlapping = false;
         for (final rowEvent in row) {
           isOverlapping = _isOverlapping(rowEvent, event);
-          logger
-              .i('일정: ${rowEvent.title} vs ${event.title}, 겹침: $isOverlapping');
           if (isOverlapping) break;
         }
         if (!isOverlapping) {
@@ -80,11 +78,11 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
           break;
         }
       }
-      if (!placed) overflow.add(event);
+      if (!placed) {
+        final int weekday = event.originalInstanceStartDate.weekday % 7;
+        overflowRow[weekday].add(event);
+      }
     }
-
-    logger.i('종일 일정: ${filteredEvents.length}개, '
-        '행: ${rows.length}개, 오버플로우: ${overflow.length}개');
 
     return Column(
       children: [
@@ -95,9 +93,8 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
         ),
         if (rows.any((row) => row.isNotEmpty))
           Container(
-            // 채워져있는 row 수 * 25
             height: 22.0 * rows.where((row) => row.isNotEmpty).length +
-                (overflow.isNotEmpty ? 22.0 : 0.0) +
+                (overflowRow.any((e) => e.isNotEmpty) ? 22.0 : 0.0) +
                 4.0,
             decoration: BoxDecoration(
               color: AppPalette.grey100,
@@ -126,21 +123,38 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
                     ),
 
                 // 오버플로우 표시 (각 요일 별로 표시) => '+${초과개수}' 표시
-                if (overflow.isNotEmpty)
-                  for (int i = 0; i < overflow.length; i++)
-                    Positioned(
-                      left: timeColumnWidth +
-                          width *
-                              (overflow[i].originalInstanceStartDate.weekday %
-                                  7),
-                      top: 22.0 * rows.length + 1.0,
-                      width: width,
-                      height: 22.0,
-                      child: Text(
-                        '+${overflow.length}',
-                        style: AppTextStyles.style14Bold(),
+                if (overflowRow.any((e) => e.isNotEmpty))
+                  for (int i = 0; i < DayOfTheWeek.values.length; i++)
+                    if (overflowRow[i].isNotEmpty)
+                      Positioned(
+                        left: timeColumnWidth + width * i,
+                        top: 22.0 * rows.length + 1.0,
+                        width: width,
+                        height: 22.0,
+                        child: GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                final DateTime today = widget.firstDayOfTheWeek
+                                    .add(Duration(days: i));
+
+                                return EventListDialog(
+                                    events: filteredEvents.where((event) {
+                                  return !event.originalInstanceStartDate
+                                          .isAfter(today) &&
+                                      !event.originalInstanceEndDate
+                                          .isBefore(today);
+                                }).toList());
+                              },
+                            );
+                          },
+                          child: Text(
+                            '+${overflowRow[i].length}',
+                            style: AppTextStyles.style14Bold(),
+                          ),
+                        ),
                       ),
-                    ),
               ],
             ),
           ),
@@ -196,7 +210,6 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
   }
 
   bool _isOverlapping(ScheduleEvent a, ScheduleEvent b) {
-    // 두 일정 사이에 겹치는 부분이 있는지 확인
     return a.originalInstanceStartDate.isBefore(b.originalInstanceEndDate) &&
         a.originalInstanceEndDate.isAfter(b.originalInstanceStartDate);
   }
@@ -281,6 +294,34 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
       originalInstanceStartDate: DateTime(2025, 3, 26, 0),
       originalInstanceEndDate: DateTime(2025, 3, 26, 23),
       title: '26 일정',
+      location: '',
+      colorType: 6,
+      isScreenLockMode: false,
+      notificationSettingType: 1,
+    ),
+    ScheduleEvent(
+      scheduleId: 4,
+      eventId: 4,
+      createdAt: DateTime(2025, 3, 1, 15),
+      isRecurring: false,
+      isAllDay: true,
+      originalInstanceStartDate: DateTime(2025, 3, 25, 0),
+      originalInstanceEndDate: DateTime(2025, 3, 25, 23),
+      title: '27 일정',
+      location: '',
+      colorType: 6,
+      isScreenLockMode: false,
+      notificationSettingType: 1,
+    ),
+    ScheduleEvent(
+      scheduleId: 4,
+      eventId: 4,
+      createdAt: DateTime(2025, 3, 1, 15),
+      isRecurring: false,
+      isAllDay: true,
+      originalInstanceStartDate: DateTime(2025, 3, 25, 0),
+      originalInstanceEndDate: DateTime(2025, 3, 25, 23),
+      title: '27 일정',
       location: '',
       colorType: 6,
       isScreenLockMode: false,

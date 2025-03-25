@@ -1,3 +1,4 @@
+import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_checkbox.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,14 @@ class CalendarAppCheckboxListTile extends StatelessWidget {
     return CalendarAppListTile(
       borderRadius: borderRadius,
       padding: padding,
-      leading: CalendarAppCheckbox(value: value, onChanged: onChanged),
+      leading: CalendarAppCheckbox(
+        value: value,
+        onChanged: onChanged,
+        inactiveSide: BorderSide(
+          width: 1.3,
+          color: AppPalette.grey400,
+        ),
+      ),
       title: title,
       onTap: () => onChanged(!value),
     );

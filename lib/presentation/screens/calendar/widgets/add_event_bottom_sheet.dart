@@ -5,9 +5,17 @@ import 'package:calendar_flutter/core/widgets/calendar_app_button.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class AddEventBottomSheet extends StatefulWidget {
-  const AddEventBottomSheet({super.key});
+  final DateTime startTime;
+  final DateTime endTime;
+
+  const AddEventBottomSheet({
+    required this.startTime,
+    required this.endTime,
+    super.key,
+  });
 
   @override
   State<AddEventBottomSheet> createState() => _AddEventBottomSheetState();
@@ -96,7 +104,7 @@ class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
               CalendarAppSquareIcon.clock(20),
               SizedBox(width: 6),
               Text(
-                '2월 6일 목요일 오전 09:00 ~ 오후 12:00',
+                '${DateFormat('M월 d일 a hh:mm', 'ko').format(widget.startTime)} ~ ${DateFormat('a hh:mm', 'ko').format(widget.endTime)}',
                 style: AppTextStyles.style16Medium(),
               ),
             ],

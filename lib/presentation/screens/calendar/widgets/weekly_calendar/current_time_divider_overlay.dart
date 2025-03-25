@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class CurrentTimeDividerOverlay extends StatelessWidget {
   const CurrentTimeDividerOverlay({super.key});
 
+  static const double _thickness = 2.0;
+  static const double _diameter = 8.0;
+
   @override
   Widget build(BuildContext context) {
-    const double thickness = 2;
-    const double diameter = 8;
     final double timeColumnWidth = MediaQuery.sizeOf(context).width * 0.105;
     final double width =
         (MediaQuery.sizeOf(context).width - timeColumnWidth) / 7;
@@ -17,17 +18,17 @@ class CurrentTimeDividerOverlay extends StatelessWidget {
         final double top = (now.hour + now.minute / 60) * 70;
         return Positioned(
           left: left,
-          top: top + thickness / 2,
+          top: top + _thickness / 2,
           width: width,
           child: Stack(
             clipBehavior: Clip.none,
             children: [
               Positioned(
-                left: -diameter / 2,
-                top: -diameter / 2 - thickness / 2,
+                left: -_diameter / 2,
+                top: -_diameter / 2 - _thickness / 2,
                 child: Container(
-                  width: diameter,
-                  height: diameter,
+                  width: _diameter,
+                  height: _diameter,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.red,
@@ -37,7 +38,7 @@ class CurrentTimeDividerOverlay extends StatelessWidget {
               Divider(
                 color: Colors.red,
                 height: 0,
-                thickness: thickness,
+                thickness: _thickness,
               ),
             ],
           ),

@@ -5,11 +5,13 @@ class CalendarAppCheckbox extends StatefulWidget {
   const CalendarAppCheckbox({
     super.key,
     required this.value,
-    this.tristate = false,
     required this.onChanged,
     this.mouseCursor,
-    this.fillColor,
-    this.checkColor,
+    this.checkColor = AppPalette.grey100,
+    this.activeColor = AppPalette.primary,
+    this.inactiveColor = AppPalette.grey100,
+    this.activeSide = BorderSide.none,
+    this.inactiveSide = BorderSide.none,
     this.focusColor,
     this.hoverColor,
     this.overlayColor,
@@ -18,14 +20,16 @@ class CalendarAppCheckbox extends StatefulWidget {
     this.autofocus = false,
     this.isError = false,
     this.semanticLabel,
-  }) : assert(tristate || value != null);
+  }) : assert(value != null);
 
   final bool? value;
   final ValueChanged<bool?>? onChanged;
   final MouseCursor? mouseCursor;
-  final WidgetStateProperty<Color?>? fillColor;
-  final Color? checkColor;
-  final bool tristate;
+  final Color checkColor;
+  final Color activeColor;
+  final Color inactiveColor;
+  final BorderSide activeSide;
+  final BorderSide inactiveSide;
   final Color? focusColor;
   final Color? hoverColor;
   final WidgetStateProperty<Color?>? overlayColor;
@@ -68,9 +72,6 @@ class _CalendarAppCheckboxState extends State<CalendarAppCheckbox>
 
   @override
   ValueChanged<bool?>? get onChanged => widget.onChanged;
-
-  @override
-  bool get tristate => widget.tristate;
 
   @override
   bool? get value => widget.value;
@@ -148,38 +149,40 @@ class _CalendarAppCheckboxState extends State<CalendarAppCheckbox>
     return Semantics(
       label: widget.semanticLabel,
       checked: widget.value ?? false,
-      mixed: widget.tristate ? widget.value == null : null,
+      mixed: null,
       child: buildToggleable(
-        mouseCursor: effectiveMouseCursor,
-        focusNode: widget.focusNode,
-        autofocus: widget.autofocus,
-        size: Size(24, 24),
-        painter: _painter
-          ..position = position
-          ..reaction = reaction
-          ..reactionFocusFade = reactionFocusFade
-          ..reactionHoverFade = reactionHoverFade
-          ..inactiveReactionColor = effectiveInactivePressedOverlayColor
-          ..reactionColor = effectiveActivePressedOverlayColor
-          ..hoverColor = effectiveHoverOverlayColor
-          ..focusColor = effectiveFocusOverlayColor
-          ..splashRadius = effectiveSplashRadius
-          ..downPosition = downPosition
-          ..isFocused = states.contains(WidgetState.focused)
-          ..isHovered = states.contains(WidgetState.hovered)
-          ..activeColor = AppPalette.primary
-          ..inactiveColor = AppPalette.grey100
-          ..checkColor = AppPalette.grey100
-          ..value = value
-          ..previousValue = _previousValue
-          ..shape = RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(4)),
-          )
-          ..activeSide = BorderSide.none
-          ..inactiveSide = BorderSide(width: 1.3, color: AppPalette.grey400),
-      ),
+          mouseCursor: effectiveMouseCursor,
+          focusNode: widget.focusNode,
+          autofocus: widget.autofocus,
+          size: Size(24, 24),
+          painter: _painter
+            ..position = position
+            ..reaction = reaction
+            ..reactionFocusFade = reactionFocusFade
+            ..reactionHoverFade = reactionHoverFade
+            ..inactiveReactionColor = effectiveInactivePressedOverlayColor
+            ..reactionColor = effectiveActivePressedOverlayColor
+            ..hoverColor = effectiveHoverOverlayColor
+            ..focusColor = effectiveFocusOverlayColor
+            ..splashRadius = effectiveSplashRadius
+            ..downPosition = downPosition
+            ..isFocused = states.contains(WidgetState.focused)
+            ..isHovered = states.contains(WidgetState.hovered)
+            ..activeColor = widget.activeColor
+            ..inactiveColor = widget.inactiveColor
+            ..checkColor = widget.checkColor
+            ..value = value
+            ..previousValue = _previousValue
+            ..shape = RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+            )
+            ..activeSide = widget.activeSide
+            ..inactiveSide = widget.inactiveSide),
     );
   }
+
+  @override
+  bool get tristate => false;
 }
 
 const double _kEdgeSize = CalendarAppCheckbox.width;

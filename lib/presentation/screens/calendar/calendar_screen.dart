@@ -82,6 +82,11 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     child: CalendarAppDatePicker(
                       onDateChanged: (value) {
                         setState(() => _currentMonth = value.month);
+                        _pageController.animateToPage(
+                          value.difference(DateTime.now()).inDays ~/ 7,
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
                       },
                       initialDate: DateTime.now(),
                       currentDate: DateTime.now(),

@@ -15,8 +15,10 @@ class CalendarApp extends ConsumerWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: const [Locale('ko', 'KR')],
+      locale: const Locale('ko', 'KR'),
       theme: ThemeUtil.appThemeData,
       routeInformationProvider: goRouter.routeInformationProvider,
       routeInformationParser: goRouter.routeInformationParser,

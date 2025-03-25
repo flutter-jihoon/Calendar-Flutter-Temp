@@ -266,6 +266,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_staggered_grid_view",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/limji/development/sdk/fluttersdk/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -348,6 +354,12 @@
       "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/http_parser-4.0.2",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "infinite_scroll_pagination",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_scroll_pagination-5.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
     },
     {
       "name": "intl",
@@ -614,6 +626,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "sliver_tools",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/sliver_tools-0.2.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "source_gen",
       "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/source_gen-1.5.0",
       "packageUri": "lib/",
@@ -770,7 +788,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-03-24T00:27:57.683724Z",
+  "generated": "2025-03-25T07:11:25.746572Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/limji/development/sdk/fluttersdk/flutter",

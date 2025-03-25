@@ -1,7 +1,8 @@
-import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_dialog.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_input_dialog.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_list_tile.dart';
+import 'package:calendar_flutter/core/widgets/calendar_app_main_app_bar.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
 import 'package:calendar_flutter/presentation/providers/calendar_list_provider.dart';
@@ -23,47 +24,48 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
     final AsyncValue<List<Calendar>> timetables =
         ref.watch(calendarListProvider);
     return Scaffold(
-      appBar: AppBar(title: Text('캘린더 관리'), centerTitle: true),
+      appBar: CalendarAppMainAppBar(title: '캘린더 관리'),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 6,
-                ),
-                child: Text(
-                  '캘린더 리스트',
-                  style: AppTextStyles.style12Regular(
-                    color: AppPalette.grey500,
-                  ),
-                ),
-              ),
-              timetables.when(
-                data: (data) {
-                  return ReorderableListView.builder(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
+              child: Text('캘린더 리스트', style: AppTextStyles.style13Medium()),
+            ),
+            timetables.when(
+              data: (data) {
+                return Expanded(
+                  child: ReorderableListView.builder(
                     onReorder: (oldIndex, newIndex) {
                       ref
                           .read(calendarListProvider.notifier)
                           .rearrangeCalendar(oldIndex, newIndex);
                     },
+                    proxyDecorator: (child, index, animation) =>
+                        Material(child: child),
                     shrinkWrap: true,
                     itemCount: data.length,
                     itemBuilder: (context, index) {
                       final Calendar timetable = data[index];
-                      return ListTile(
+                      return CalendarAppListTile(
+                        padding: const EdgeInsets.fromLTRB(16, 12, 8, 12),
+                        borderRadius: BorderRadius.zero,
                         key: ValueKey(timetable.title),
-                        title: Text(timetable.title),
+                        title: Text(
+                          timetable.title,
+                          style: AppTextStyles.style15Medium(),
+                        ),
                         onTap: () {},
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            IconButton(
-                              icon: CalendarAppSquareIcon.edit(20),
-                              onPressed: () async {
+                            InkWell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: CalendarAppSquareIcon.edit(20),
+                              ),
+                              onTap: () async {
                                 final TextEditingController
                                     textEditingController =
                                     TextEditingController(
@@ -87,9 +89,13 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
                                 }
                               },
                             ),
-                            IconButton(
-                              icon: CalendarAppSquareIcon.delete(20),
-                              onPressed: () async {
+                            InkWell(
+                              customBorder: CircleBorder(),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: CalendarAppSquareIcon.delete(20),
+                              ),
+                              onTap: () async {
                                 final bool? result = await showDialog<bool>(
                                   context: context,
                                   builder: (context) {
@@ -108,38 +114,41 @@ class _TimetableManageScreenState extends ConsumerState<CalendarManageScreen> {
                                 }
                               },
                             ),
-                            ReorderableDragStartListener(
-                              index: index,
-                              child: CalendarAppSquareIcon.move(20),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: ReorderableDragStartListener(
+                                index: index,
+                                child: CalendarAppSquareIcon.move(20),
+                              ),
                             )
                           ],
                         ),
                       );
                     },
-                  );
-                },
-                loading: () {
-                  return const Center(child: CircularProgressIndicator());
-                },
-                error: (error, stackTrace) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('에러가 발생했습니다'),
-                        ElevatedButton(
-                          onPressed: () {
-                            ref.invalidate(calendarListProvider);
-                          },
-                          child: const Text('다시 시도'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+              loading: () {
+                return const Center(child: CircularProgressIndicator());
+              },
+              error: (error, stackTrace) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('에러가 발생했습니다'),
+                      ElevatedButton(
+                        onPressed: () {
+                          ref.invalidate(calendarListProvider);
+                        },
+                        child: const Text('다시 시도'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
