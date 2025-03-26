@@ -56,16 +56,22 @@ class _WeeklyCalendarBodyState extends ConsumerState<WeeklyCalendarBody> {
           columnWidths: {0: FixedColumnWidth(timeColumnWidth)},
           children: buildTimelineRows(timeColumnWidth),
         ),
-        ...eventGroups.map(
-          (eventGroup) => WeeklyCalendarEventOverlay(
-            eventGroup: eventGroup,
-            firstDayOfWeek: widget.firstDayOfTheWeek,
+        Positioned.fill(
+          child: Stack(
+            children: [
+              ...eventGroups.map(
+                (eventGroup) => WeeklyCalendarEventOverlay(
+                  eventGroup: eventGroup,
+                  firstDayOfWeek: widget.firstDayOfTheWeek,
+                ),
+              ),
+              WeeklyCalendarSelectOverlay(
+                startTime: _startTime,
+                firstDayOfWeek: widget.firstDayOfTheWeek,
+                onSelectionChanged: widget.onSelectionChanged,
+              ),
+            ],
           ),
-        ),
-        WeeklyCalendarSelectOverlay(
-          startTime: _startTime,
-          firstDayOfWeek: widget.firstDayOfTheWeek,
-          onSelectionChanged: widget.onSelectionChanged,
         ),
         if (widget.firstDayOfTheWeek
             .isSameDay(DateTime.now().firstDayOfTheWeek))

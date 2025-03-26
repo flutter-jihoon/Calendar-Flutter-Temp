@@ -162,10 +162,6 @@ flutter_riverpod
 2.17
 file:///Users/limji/.pub-cache/hosted/pub.dev/flutter_riverpod-2.6.1/
 file:///Users/limji/.pub-cache/hosted/pub.dev/flutter_riverpod-2.6.1/lib/
-flutter_staggered_grid_view
-2.12
-file:///Users/limji/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0/
-file:///Users/limji/.pub-cache/hosted/pub.dev/flutter_staggered_grid_view-0.7.0/lib/
 fluttertoast
 2.12
 file:///Users/limji/.pub-cache/hosted/pub.dev/fluttertoast-8.2.12/
@@ -214,14 +210,6 @@ http_parser
 2.12
 file:///Users/limji/.pub-cache/hosted/pub.dev/http_parser-4.0.2/
 file:///Users/limji/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/
-infinite_pageview
-2.17
-file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_pageview-0.0.4/
-file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_pageview-0.0.4/lib/
-infinite_scroll_pagination
-3.4
-file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_scroll_pagination-5.0.0/
-file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_scroll_pagination-5.0.0/lib/
 intl
 3.0
 file:///Users/limji/.pub-cache/hosted/pub.dev/intl-0.19.0/
@@ -358,10 +346,6 @@ rxdart
 2.12
 file:///Users/limji/.pub-cache/hosted/pub.dev/rxdart-0.28.0/
 file:///Users/limji/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib/
-scroll_page_view
-2.12
-file:///Users/limji/.pub-cache/hosted/pub.dev/scroll_page_view-1.0.2/
-file:///Users/limji/.pub-cache/hosted/pub.dev/scroll_page_view-1.0.2/lib/
 shared_preferences
 3.5
 file:///Users/limji/.pub-cache/hosted/pub.dev/shared_preferences-2.5.2/
@@ -398,10 +382,6 @@ shelf_web_socket
 3.3
 file:///Users/limji/.pub-cache/hosted/pub.dev/shelf_web_socket-2.0.1/
 file:///Users/limji/.pub-cache/hosted/pub.dev/shelf_web_socket-2.0.1/lib/
-sliver_tools
-2.12
-file:///Users/limji/.pub-cache/hosted/pub.dev/sliver_tools-0.2.12/
-file:///Users/limji/.pub-cache/hosted/pub.dev/sliver_tools-0.2.12/lib/
 source_gen
 3.0
 file:///Users/limji/.pub-cache/hosted/pub.dev/source_gen-1.5.0/

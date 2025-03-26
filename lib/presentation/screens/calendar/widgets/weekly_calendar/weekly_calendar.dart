@@ -6,14 +6,22 @@ import 'package:calendar_flutter/presentation/screens/calendar/widgets/weekly_ca
 import 'package:flutter/material.dart';
 
 class WeeklyCalendar extends StatefulWidget {
+  final PageController pageController;
   final ScrollController scrollController;
+  final DateTime firstDate;
+  final DateTime lastDate;
+  final int initialPage;
   final Calendar? currentCalendar;
-  final int weekOffset;
+  final void Function(int)? onPageChanged;
 
   const WeeklyCalendar({
+    required this.pageController,
     required this.scrollController,
+    required this.firstDate,
+    required this.lastDate,
+    required this.initialPage,
     required this.currentCalendar,
-    required this.weekOffset,
+    required this.onPageChanged,
     super.key,
   });
 
@@ -24,36 +32,44 @@ class WeeklyCalendar extends StatefulWidget {
 class _WeeklyCalendarState extends State<WeeklyCalendar> {
   ({DateTime? startTime, DateTime? endTime}) _selectedTimeRange =
       (startTime: null, endTime: null);
-
   @override
   Widget build(BuildContext context) {
-    final DateTime firstDayOfTheWeek = DateTime.now()
-        .firstDayOfTheWeek
-        .add(Duration(days: widget.weekOffset * 7));
+    logger.i('selectedTimeRange: $_selectedTimeRange');
 
-    return Column(
-      children: [
-        WeeklyCalendarHeader(firstDayOfTheWeek: firstDayOfTheWeek),
-        Expanded(
-          child: SingleChildScrollView(
-            controller: widget.scrollController,
-            child: WeeklyCalendarBody(
-              startTime: _selectedTimeRange.startTime,
-              endTime: _selectedTimeRange.endTime,
-              currentCalendar: widget.currentCalendar,
-              firstDayOfTheWeek: firstDayOfTheWeek,
-              onSelectionChanged: (DateTime? startTime, DateTime? endTime) {
-                setState(
-                  () => _selectedTimeRange = (
-                    startTime: startTime,
-                    endTime: endTime,
-                  ),
-                );
-              },
+    return PageView.builder(
+      controller: widget.pageController,
+      itemCount: widget.lastDate.difference(widget.firstDate).inDays ~/ 7,
+      onPageChanged: widget.onPageChanged,
+      itemBuilder: (context, index) {
+        final weekOffset = index - widget.initialPage;
+        final DateTime firstDayOfTheWeek = DateTime.now()
+            .firstDayOfTheWeek
+            .add(Duration(days: weekOffset * 7));
+        return Column(
+          children: [
+            WeeklyCalendarHeader(firstDayOfTheWeek: firstDayOfTheWeek),
+            Expanded(
+              child: SingleChildScrollView(
+                controller: widget.scrollController,
+                child: WeeklyCalendarBody(
+                  startTime: _selectedTimeRange.startTime,
+                  endTime: _selectedTimeRange.endTime,
+                  currentCalendar: widget.currentCalendar,
+                  firstDayOfTheWeek: firstDayOfTheWeek,
+                  onSelectionChanged: (DateTime? startTime, DateTime? endTime) {
+                    setState(
+                      () => _selectedTimeRange = (
+                        startTime: startTime,
+                        endTime: endTime,
+                      ),
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

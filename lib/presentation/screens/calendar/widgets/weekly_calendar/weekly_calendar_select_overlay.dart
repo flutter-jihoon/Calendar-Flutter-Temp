@@ -31,8 +31,8 @@ class _WeeklyCalendarSelectOverlayState
 
   late DateTime? _startTime;
   late DateTime? _endTime;
-  Duration _selectionDuration = Duration(hours: 1);
 
+  Duration _selectionDuration = Duration(hours: 1);
   double _dragOffset = 0.0;
 
   @override
@@ -67,78 +67,77 @@ class _WeeklyCalendarSelectOverlayState
       );
     }
 
-    return Positioned.fill(
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Table(
-              columnWidths: {0: FixedColumnWidth(timeColumnWidth)},
-              children: List.generate(
-                Duration(days: 1).inHours,
-                (hour) {
-                  return TableRow(
-                    children: List.generate(
-                      DayOfTheWeek.values.length + 1,
-                      (dayIndex) {
-                        return SizedBox(
-                          height: 70,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    final DateTime day = widget.firstDayOfWeek
-                                        .add(Duration(days: dayIndex - 1));
-                                    final DateTime newStartTime = DateTime(
-                                        day.year, day.month, day.day, hour);
-                                    setState(() {
-                                      _startTime = newStartTime;
-                                      _endTime =
-                                          _startTime!.add(_selectionDuration);
-                                    });
-                                    widget.onSelectionChanged(
-                                        _startTime, _endTime);
-                                  },
-                                ),
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Table(
+            columnWidths: {0: FixedColumnWidth(timeColumnWidth)},
+            children: List.generate(
+              Duration(days: 1).inHours,
+              (hour) {
+                return TableRow(
+                  children: List.generate(
+                    DayOfTheWeek.values.length + 1,
+                    (dayIndex) {
+                      return SizedBox(
+                        height: 70,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onTap: () {
+                                  final DateTime day = widget.firstDayOfWeek
+                                      .add(Duration(days: dayIndex - 1));
+                                  final DateTime newStartTime = DateTime(
+                                      day.year, day.month, day.day, hour);
+                                  setState(() {
+                                    _startTime = newStartTime;
+                                    _endTime =
+                                        _startTime!.add(_selectionDuration);
+                                  });
+                                  widget.onSelectionChanged(
+                                      _startTime, _endTime);
+                                },
                               ),
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    final DateTime day = widget.firstDayOfWeek
-                                        .add(Duration(days: dayIndex - 1));
-                                    final DateTime newStartTime = DateTime(
-                                        day.year, day.month, day.day, hour, 30);
-                                    setState(() {
-                                      _startTime = newStartTime;
-                                      _endTime =
-                                          _startTime!.add(_selectionDuration);
-                                    });
-                                    widget.onSelectionChanged(
-                                        _startTime, _endTime);
-                                  },
-                                ),
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  final DateTime day = widget.firstDayOfWeek
+                                      .add(Duration(days: dayIndex - 1));
+                                  final DateTime newStartTime = DateTime(
+                                      day.year, day.month, day.day, hour, 30);
+                                  setState(() {
+                                    _startTime = newStartTime;
+                                    _endTime =
+                                        _startTime!.add(_selectionDuration);
+                                  });
+                                  widget.onSelectionChanged(
+                                      _startTime, _endTime);
+                                },
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                },
-              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
           ),
-          ...overlays,
-        ],
-      ),
+        ),
+        ...overlays,
+      ],
     );
   }
 
   Widget buildOverlayWidgetForSingleDay(DateTime startTime, DateTime endTime,
       double timeColumnWidth, double width) {
     return Positioned(
-      left: timeColumnWidth + width * (startTime.weekday % 7),
-      top: 70 * (startTime.hour + startTime.minute / 60),
+      left: timeColumnWidth + width * (startTime.weekday % 7) - 5,
+      top: 70 * (startTime.hour + startTime.minute / 60) - 5,
       child: buildSelectOverlayWidget(startTime, endTime),
     );
   }
@@ -149,12 +148,12 @@ class _WeeklyCalendarSelectOverlayState
         (MediaQuery.sizeOf(context).width - timeColumnWidth) / 7;
 
     return Stack(
-      clipBehavior: Clip.none,
       children: [
         IgnorePointer(
           child: Container(
             width: width,
             height: _selectionDuration.inMinutes / 60 * 70,
+            margin: const EdgeInsets.all(5),
             decoration: BoxDecoration(
               color: AppPalette.primary.withOpacity(0.05),
               border: Border.all(color: AppPalette.primary, width: 1),
@@ -166,8 +165,8 @@ class _WeeklyCalendarSelectOverlayState
           ),
         ),
         Positioned(
-          left: -5,
-          top: -5,
+          left: 0,
+          top: 0,
           child: GestureDetector(
             onPanDown: (_) => HapticFeedback.mediumImpact(),
             onVerticalDragUpdate: (details) {
@@ -175,14 +174,6 @@ class _WeeklyCalendarSelectOverlayState
               if (_dragOffset.abs() >= _step) {
                 final int steps = (_dragOffset / _step).truncate();
                 final newStartTime = startTime.add(_stepDuration * steps);
-                if (newStartTime
-                    .isBefore(startTime.add(_durationRange.minimumDuration))) {
-                  return;
-                }
-                if (newStartTime.isAfter(
-                    endTime.subtract(_durationRange.minimumDuration))) {
-                  return;
-                }
                 HapticFeedback.lightImpact();
                 setState(() {
                   startTime = newStartTime;
@@ -196,8 +187,8 @@ class _WeeklyCalendarSelectOverlayState
           ),
         ),
         Positioned(
-          right: -5,
-          bottom: -5,
+          right: 0,
+          bottom: 0,
           child: GestureDetector(
             onPanDown: (_) => HapticFeedback.mediumImpact(),
             onVerticalDragUpdate: (details) {
@@ -205,14 +196,6 @@ class _WeeklyCalendarSelectOverlayState
               if (_dragOffset.abs() >= _step) {
                 final int steps = (_dragOffset / _step).truncate();
                 final newEndTime = endTime.add(_stepDuration * steps);
-                if (newEndTime
-                    .isBefore(startTime.add(_durationRange.minimumDuration))) {
-                  return;
-                }
-                if (newEndTime
-                    .isAfter(startTime.add(_durationRange.maximumDuration))) {
-                  return;
-                }
                 HapticFeedback.lightImpact();
                 setState(() {
                   endTime = newEndTime;

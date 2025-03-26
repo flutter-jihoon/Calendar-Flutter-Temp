@@ -1,4 +1,5 @@
 import 'package:calendar_flutter/core/constants/route_path.dart';
+import 'package:calendar_flutter/core/utils/date_time_util.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_date_picker.dart';
 import 'package:calendar_flutter/core/widgets/calendar_app_square_icons.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
@@ -18,21 +19,22 @@ class CalendarScreen extends ConsumerStatefulWidget {
 }
 
 class _CalendarScreenState extends ConsumerState<CalendarScreen> {
-  static final firstDate = DateTime(1900, 1, 1);
-  static final lastDate = DateTime(2100, 1, 1);
-  static final initialPage = DateTime.now().difference(firstDate).inDays ~/ 7;
+  static final DateTime _firstDate = DateTime(1900, 1, 1);
+  static final DateTime _lastDate = DateTime(2100, 1, 1);
+  static final int _initialPage =
+      DateTime.now().difference(_firstDate).inDays ~/ 7;
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late ScrollController _scrollController;
-  late PageController _pageController;
 
-  int _currentMonth = DateTime.now().month;
   bool _isWeekPickerExpanded = false;
+  DateTime _selectedDate = DateTime.now();
+  late PageController _pageController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: initialPage);
+    _pageController = PageController(initialPage: _initialPage);
     _scrollController = TrackingScrollController(
       initialScrollOffset: 70 * DateTime.now().hour.toDouble(),
     );
@@ -55,20 +57,16 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       data: (data) => Scaffold(
         key: _scaffoldKey,
         appBar: CalendarScreenAppBar(
-          title: '$_currentMonth월',
+          title: _appBarTitle,
           onExpandButtonPressed: () {
             setState(() => _isWeekPickerExpanded = !_isWeekPickerExpanded);
           },
-          onTodayButtonPressed: () {
-            _pageController
-                .animateToPage(initialPage,
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeInOut)
-                .then((_) {
-              _scrollController.animateTo(70.0 * DateTime.now().hour,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOut);
-            });
+          onTodayButtonPressed: () async {
+            setState(() => _selectedDate = DateTime.now());
+            await _pageController.animateToPage(_initialPage,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
+            _scrollController.animateTo(70.0 * DateTime.now().hour,
+                duration: Duration(milliseconds: 300), curve: Curves.easeInOut);
           },
           onMenuButtonPressed: () => _scaffoldKey.currentState?.openEndDrawer(),
           isExpanded: _isWeekPickerExpanded,
@@ -85,30 +83,37 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     curve: Curves.easeInOut,
                     child: CalendarAppDatePicker(
                       onDateChanged: (value) {
-                        setState(() => _currentMonth = value.month);
+                        final int weekOffset = value.firstDayOfTheWeek
+                                .difference(_firstDate.firstDayOfTheWeek)
+                                .inDays ~/
+                            7;
                         _pageController.animateToPage(
-                          value.difference(firstDate).inDays ~/ 7,
+                          weekOffset,
                           duration: Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
                         );
                       },
-                      initialDate: DateTime.now(),
-                      currentDate: DateTime.now(),
-                      firstDate: firstDate,
-                      lastDate: lastDate,
+                      initialDate: _selectedDate,
+                      firstDate: _firstDate,
+                      lastDate: _lastDate,
                     ),
                   ),
                   Expanded(
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemCount: lastDate.difference(firstDate).inDays ~/ 7,
-                      itemBuilder: (context, index) => WeeklyCalendar(
-                        scrollController: _scrollController,
-                        currentCalendar: currentCalendar,
-                        // initialPage: DateTime.now().difference(firstDate).inDays ~/ 7,
-                        // 위 값일 경우 weekOffset = 0
-                        weekOffset: index - initialPage,
-                      ),
+                    child: WeeklyCalendar(
+                      scrollController: _scrollController,
+                      pageController: _pageController,
+                      currentCalendar: currentCalendar,
+                      firstDate: _firstDate,
+                      lastDate: _lastDate,
+                      initialPage: _initialPage,
+                      onPageChanged: (value) {
+                        WidgetsBinding.instance.addPostFrameCallback((_) {
+                          setState(() {
+                            _selectedDate = _firstDate.firstDayOfTheWeek
+                                .add(Duration(days: value * 7));
+                          });
+                        });
+                      },
                     ),
                   ),
                 ],
@@ -130,5 +135,30 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
       loading: () => const CircularProgressIndicator(),
       error: (error, stackTrace) => Text('Error: $error'),
     );
+  }
+
+  String get _appBarTitle {
+    final DateTime firstDayOfTheWeek =
+        _selectedDate.subtract(Duration(days: _selectedDate.weekday % 7));
+    final List<int> monthsInWeek = List.generate(7, (index) {
+      return firstDayOfTheWeek.add(Duration(days: index)).month;
+    });
+    final Map<int, int> monthCountMap = {};
+    for (final int month in monthsInWeek) {
+      monthCountMap.update(month, (count) => count + 1, ifAbsent: () => 1);
+    }
+
+    final int selectedMonth =
+        monthCountMap.entries.fold<int>(0, (selectedMonth, entry) {
+      return entry.value > (monthCountMap[selectedMonth] ?? 0)
+          ? entry.key
+          : selectedMonth;
+    });
+
+    if (DateTime.now().year == _selectedDate.year) {
+      return '$selectedMonth월';
+    } else {
+      return '${_selectedDate.year}년 $selectedMonth월';
+    }
   }
 }
