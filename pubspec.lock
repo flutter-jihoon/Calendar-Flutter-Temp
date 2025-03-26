@@ -458,6 +458,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  infinite_pageview:
+    dependency: "direct main"
+    description:
+      name: infinite_pageview
+      sha256: "1f01e3f0992b5890ab531ef572300d828b632baee0db6ebcf4d9d7dd72a7f7d2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   infinite_scroll_pagination:
     dependency: "direct main"
     description:
@@ -738,6 +746,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.28.0"
+  scroll_page_view:
+    dependency: "direct main"
+    description:
+      name: scroll_page_view
+      sha256: "6b4c8502fd59644dd201f0df1efde1927a2e94d1328b27e71ea3efb4c5380c8b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   shared_preferences:
     dependency: "direct main"
     description:

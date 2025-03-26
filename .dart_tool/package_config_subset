@@ -214,6 +214,10 @@ http_parser
 2.12
 file:///Users/limji/.pub-cache/hosted/pub.dev/http_parser-4.0.2/
 file:///Users/limji/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib/
+infinite_pageview
+2.17
+file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_pageview-0.0.4/
+file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_pageview-0.0.4/lib/
 infinite_scroll_pagination
 3.4
 file:///Users/limji/.pub-cache/hosted/pub.dev/infinite_scroll_pagination-5.0.0/
@@ -354,6 +358,10 @@ rxdart
 2.12
 file:///Users/limji/.pub-cache/hosted/pub.dev/rxdart-0.28.0/
 file:///Users/limji/.pub-cache/hosted/pub.dev/rxdart-0.28.0/lib/
+scroll_page_view
+2.12
+file:///Users/limji/.pub-cache/hosted/pub.dev/scroll_page_view-1.0.2/
+file:///Users/limji/.pub-cache/hosted/pub.dev/scroll_page_view-1.0.2/lib/
 shared_preferences
 3.5
 file:///Users/limji/.pub-cache/hosted/pub.dev/shared_preferences-2.5.2/

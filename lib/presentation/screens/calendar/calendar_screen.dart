@@ -18,6 +18,10 @@ class CalendarScreen extends ConsumerStatefulWidget {
 }
 
 class _CalendarScreenState extends ConsumerState<CalendarScreen> {
+  static final firstDate = DateTime(1900, 1, 1);
+  static final lastDate = DateTime(2100, 1, 1);
+  static final initialPage = DateTime.now().difference(firstDate).inDays ~/ 7;
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late ScrollController _scrollController;
   late PageController _pageController;
@@ -28,7 +32,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _pageController = PageController(initialPage: initialPage);
     _scrollController = TrackingScrollController(
       initialScrollOffset: 70 * DateTime.now().hour.toDouble(),
     );
@@ -57,7 +61,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           },
           onTodayButtonPressed: () {
             _pageController
-                .animateToPage(0,
+                .animateToPage(initialPage,
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut)
                 .then((_) {
@@ -83,24 +87,27 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                       onDateChanged: (value) {
                         setState(() => _currentMonth = value.month);
                         _pageController.animateToPage(
-                          value.difference(DateTime.now()).inDays ~/ 7,
+                          value.difference(firstDate).inDays ~/ 7,
                           duration: Duration(milliseconds: 300),
                           curve: Curves.easeInOut,
                         );
                       },
                       initialDate: DateTime.now(),
                       currentDate: DateTime.now(),
-                      firstDate: DateTime(1900, 1, 1),
-                      lastDate: DateTime(2100, 1, 1),
+                      firstDate: firstDate,
+                      lastDate: lastDate,
                     ),
                   ),
                   Expanded(
                     child: PageView.builder(
                       controller: _pageController,
+                      itemCount: lastDate.difference(firstDate).inDays ~/ 7,
                       itemBuilder: (context, index) => WeeklyCalendar(
                         scrollController: _scrollController,
                         currentCalendar: currentCalendar,
-                        weekOffset: index,
+                        // initialPage: DateTime.now().difference(firstDate).inDays ~/ 7,
+                        // 위 값일 경우 weekOffset = 0
+                        weekOffset: index - initialPage,
                       ),
                     ),
                   ),

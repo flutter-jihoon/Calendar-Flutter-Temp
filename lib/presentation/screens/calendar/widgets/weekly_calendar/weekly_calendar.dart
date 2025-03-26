@@ -31,7 +31,6 @@ class _WeeklyCalendarState extends State<WeeklyCalendar> {
         .firstDayOfTheWeek
         .add(Duration(days: widget.weekOffset * 7));
 
-    logger.i('selectedTimeRange: $_selectedTimeRange');
     return Column(
       children: [
         WeeklyCalendarHeader(firstDayOfTheWeek: firstDayOfTheWeek),
