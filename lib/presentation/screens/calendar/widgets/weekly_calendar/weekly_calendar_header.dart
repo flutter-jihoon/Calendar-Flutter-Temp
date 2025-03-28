@@ -8,10 +8,10 @@ import 'package:calendar_flutter/core/utils/text_style_util.dart';
 import 'package:calendar_flutter/presentation/screens/calendar/widgets/weekly_calendar/calendar_all_day_event_tile.dart';
 
 class WeeklyCalendarHeader extends StatefulWidget {
-  final DateTime firstDayOfTheWeek;
+  final DateTime firstDayOfWeek;
 
   const WeeklyCalendarHeader({
-    required this.firstDayOfTheWeek,
+    required this.firstDayOfWeek,
     super.key,
   });
 
@@ -30,7 +30,7 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
     final allDayEvents = _testEvents.where((event) => event.isAllDay).toList();
 
     // --- 캘린더 시작 날짜 및 범위 설정
-    final startDate = widget.firstDayOfTheWeek; // 첫 번째 요일로 시작 날짜 설정
+    final startDate = widget.firstDayOfWeek; // 첫 번째 요일로 시작 날짜 설정
     final endDate = startDate.add(Duration(days: 6)); // 시작일부터 7일 후
 
     // --- 캘린더 범위 내의 일정만 필터링
@@ -136,7 +136,7 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
                             showDialog(
                               context: context,
                               builder: (context) {
-                                final DateTime today = widget.firstDayOfTheWeek
+                                final DateTime today = widget.firstDayOfWeek
                                     .add(Duration(days: i));
 
                                 return EventListDialog(
@@ -168,7 +168,7 @@ class _WeeklyCalendarHeaderState extends State<WeeklyCalendarHeader> {
       children: List.generate(DayOfTheWeek.values.length + 1, (index) {
         if (index == 0) return TableCell(child: SizedBox.shrink());
         final DateTime date =
-            widget.firstDayOfTheWeek.add(Duration(days: index - 1));
+            widget.firstDayOfWeek.add(Duration(days: index - 1));
         final bool isToday = date.isToday;
         return TableCell(
           verticalAlignment: TableCellVerticalAlignment.middle,

@@ -38,6 +38,12 @@
       "languageVersion": "2.18"
     },
     {
+      "name": "back_button_interceptor",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/back_button_interceptor-5.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.13"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -200,6 +206,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "draggable_bottom_sheet",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/draggable_bottom_sheet-1.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "drift",
       "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/drift-2.23.1",
       "packageUri": "lib/",
@@ -216,6 +228,18 @@
       "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/drift_flutter-0.2.4",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "expandable_bottom_sheet",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/expandable_bottom_sheet-1.1.1+1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "expanded_bottom_sheet",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/expanded_bottom_sheet-0.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "fake_async",
@@ -722,6 +746,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "visibility_detector",
+      "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/visibility_detector-0.4.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vm_service",
       "rootUri": "file:///Users/limji/.pub-cache/hosted/pub.dev/vm_service-14.2.5",
       "packageUri": "lib/",
@@ -770,7 +800,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-03-26T07:58:41.826333Z",
+  "generated": "2025-03-28T07:25:30.949056Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Users/limji/development/sdk/fluttersdk/flutter",

@@ -30,7 +30,7 @@ class CalendarScreenAppBar extends StatelessWidget
       titleSpacing: 8,
       title: Row(
         children: [
-          Text(title, style: AppTextStyles.style16Bold()),
+          Flexible(child: Text(title, style: AppTextStyles.style16Bold())),
           SizedBox(width: 2),
           InkWell(
             onTap: onExpandButtonPressed,
@@ -52,6 +52,7 @@ class CalendarScreenAppBar extends StatelessWidget
       actions: [
         Container(
           padding: EdgeInsets.fromLTRB(8, 2, 2, 2),
+          margin: EdgeInsets.only(right: 8),
           decoration: BoxDecoration(
             color: AppPalette.primary,
             borderRadius: BorderRadius.circular(13),
@@ -77,12 +78,13 @@ class CalendarScreenAppBar extends StatelessWidget
             ],
           ),
         ),
-        SizedBox(width: 15),
-        IconButton(
-          onPressed: onTodayButtonPressed,
-          icon: SizedBox(
+        InkWell(
+          onTap: onTodayButtonPressed,
+          customBorder: const CircleBorder(),
+          child: Container(
             width: 24,
             height: 24,
+            margin: const EdgeInsets.all(7),
             child: Center(
               child: Stack(
                 children: [
@@ -110,10 +112,15 @@ class CalendarScreenAppBar extends StatelessWidget
             ),
           ),
         ),
-        IconButton(
-          icon: CalendarAppSquareIcon.menu(24),
-          onPressed: onMenuButtonPressed,
+        InkWell(
+          onTap: onMenuButtonPressed,
+          customBorder: const CircleBorder(),
+          child: Padding(
+            padding: const EdgeInsets.all(7),
+            child: CalendarAppSquareIcon.menu(24),
+          ),
         ),
+        SizedBox(width: 9),
       ],
     );
   }

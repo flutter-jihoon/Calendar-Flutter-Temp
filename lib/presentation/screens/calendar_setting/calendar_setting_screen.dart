@@ -204,16 +204,16 @@ class _CalendarSelectScreenState extends ConsumerState<CalendarSettingScreen> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: List.generate(
-                        CalendarFirstDayOfWeek.values.length,
+                        CalendarfirstDayOfWeek.values.length,
                         (index) => Padding(
                           padding: const EdgeInsets.only(left: 8),
                           child: SettingRadioButton(
-                            value: CalendarFirstDayOfWeek.values[index],
+                            value: CalendarfirstDayOfWeek.values[index],
                             groupValue: _selectedTheme,
                             onChanged: (value) => setState(() {
                               // TODO: Implement onChanged
                             }),
-                            text: CalendarFirstDayOfWeek
+                            text: CalendarfirstDayOfWeek
                                 .values[index].description,
                           ),
                         ),

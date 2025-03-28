@@ -15,11 +15,11 @@ enum CalendarTimeFormat {
   const CalendarTimeFormat(this.description);
 }
 
-enum CalendarFirstDayOfWeek {
+enum CalendarfirstDayOfWeek {
   saturday('토'),
   sunday('일'),
   monday('월');
 
   final String description;
-  const CalendarFirstDayOfWeek(this.description);
+  const CalendarfirstDayOfWeek(this.description);
 }

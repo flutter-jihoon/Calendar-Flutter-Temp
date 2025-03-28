@@ -17,12 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class CalendarScreenDrawer extends ConsumerStatefulWidget {
-  final List<Calendar> data;
-
-  const CalendarScreenDrawer({
-    required this.data,
-    super.key,
-  });
+  const CalendarScreenDrawer({super.key});
 
   @override
   ConsumerState<CalendarScreenDrawer> createState() =>
@@ -34,6 +29,9 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Calendar> calendars =
+        ref.watch(calendarListProvider).requireValue;
+
     final Calendar? currentCalendar = ref.watch(currentCalendarProvider);
 
     final List<Timetable> timetables = List.generate(4, (index) {
@@ -97,9 +95,9 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                         physics: ClampingScrollPhysics(),
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
-                        itemCount: widget.data.length,
+                        itemCount: calendars.length,
                         itemBuilder: (context, index) {
-                          final Calendar calendar = widget.data[index];
+                          final Calendar calendar = calendars[index];
                           final bool isSelected = calendar == currentCalendar;
                           return ListTile(
                             title: Text(
@@ -126,7 +124,7 @@ class _TimetableScreenDrawerState extends ConsumerState<CalendarScreenDrawer> {
                                 EdgeInsets.symmetric(horizontal: 16),
                             onTap: () {
                               ref.read(currentCalendarProvider.notifier).state =
-                                  widget.data[index];
+                                  calendars[index];
                             },
                           );
                         },

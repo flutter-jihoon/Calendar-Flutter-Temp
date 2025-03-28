@@ -1,29 +1,28 @@
 import 'package:calendar_flutter/core/enums/day_of_the_week.dart';
 import 'package:calendar_flutter/core/utils/color_util.dart';
 import 'package:calendar_flutter/core/utils/date_time_util.dart';
+import 'package:calendar_flutter/core/utils/log_util.dart';
 import 'package:calendar_flutter/core/utils/schedule_event_util.dart';
 import 'package:calendar_flutter/core/utils/text_style_util.dart';
+import 'package:calendar_flutter/core/widgets/minimizable_bottom_sheet.dart';
 import 'package:calendar_flutter/domain/entities/calendar.dart';
 import 'package:calendar_flutter/domain/entities/schedule_event.dart';
+import 'package:calendar_flutter/presentation/providers/selected_time_range_provider.dart';
+import 'package:calendar_flutter/presentation/screens/calendar/widgets/add_event_bottom_sheet.dart';
 import 'package:calendar_flutter/presentation/screens/calendar/widgets/weekly_calendar/current_time_divider_overlay.dart';
 import 'package:calendar_flutter/presentation/screens/calendar/widgets/weekly_calendar/weekly_calendar_event_overlay.dart';
 import 'package:calendar_flutter/presentation/screens/calendar/widgets/weekly_calendar/weekly_calendar_select_overlay.dart';
+import 'package:expanded_bottom_sheet/ScrollableBottomSheet.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
 class WeeklyCalendarBody extends ConsumerStatefulWidget {
   final Calendar? currentCalendar;
-  final DateTime firstDayOfTheWeek;
-  final DateTime? startTime;
-  final DateTime? endTime;
-  final Function(DateTime? startTime, DateTime? endTime) onSelectionChanged;
+  final DateTimeRange currentWeek;
 
   const WeeklyCalendarBody({
     required this.currentCalendar,
-    required this.firstDayOfTheWeek,
-    required this.startTime,
-    required this.endTime,
-    required this.onSelectionChanged,
+    required this.currentWeek,
     super.key,
   });
 
@@ -33,7 +32,6 @@ class WeeklyCalendarBody extends ConsumerStatefulWidget {
 
 class _WeeklyCalendarBodyState extends ConsumerState<WeeklyCalendarBody> {
   PersistentBottomSheetController? _bottomSheetController;
-  DateTime? _startTime;
 
   @override
   void dispose() {
@@ -46,6 +44,25 @@ class _WeeklyCalendarBodyState extends ConsumerState<WeeklyCalendarBody> {
     final double timeColumnWidth = MediaQuery.sizeOf(context).width * 0.105;
     final List<ScheduleEvent> events = _testEvents;
     final List<List<ScheduleEvent>> eventGroups = events.groupEvents();
+    final Duration? duration = ref.watch(selectedTimeRangeProvider)?.duration;
+
+    ref.listen(selectedTimeRangeProvider, (prev, next) {
+      if (next != null) {
+        logger.i('바텀시트 띄워야됨');
+        final controller = showMinimizableBottomSheet(
+          context: context,
+          builder: (context) => AddEventBottomSheet(
+            startTime: next.start,
+            endTime: next.end,
+          ),
+          sheetAnimationStyle: prev == null ? null : AnimationStyle.noAnimation,
+        );
+        final Future<void> minimized = controller.closed;
+        minimized.then((value) {
+          ref.read(selectedTimeRangeProvider.notifier).state = null;
+        });
+      }
+    });
 
     return Stack(
       children: [
@@ -54,7 +71,10 @@ class _WeeklyCalendarBodyState extends ConsumerState<WeeklyCalendarBody> {
             inside: BorderSide(color: AppPalette.divider, width: 1),
           ),
           columnWidths: {0: FixedColumnWidth(timeColumnWidth)},
-          children: buildTimelineRows(timeColumnWidth),
+          children: buildTimelineRows(
+            timeColumnWidth,
+            duration ?? Duration(hours: 1),
+          ),
         ),
         Positioned.fill(
           child: Stack(
@@ -62,25 +82,31 @@ class _WeeklyCalendarBodyState extends ConsumerState<WeeklyCalendarBody> {
               ...eventGroups.map(
                 (eventGroup) => WeeklyCalendarEventOverlay(
                   eventGroup: eventGroup,
-                  firstDayOfWeek: widget.firstDayOfTheWeek,
+                  firstDayOfWeek: widget.currentWeek.start,
                 ),
               ),
               WeeklyCalendarSelectOverlay(
-                startTime: _startTime,
-                firstDayOfWeek: widget.firstDayOfTheWeek,
-                onSelectionChanged: widget.onSelectionChanged,
+                onSelectionChanged: (startTime, endTime) {
+                  if (startTime == null || endTime == null) return;
+                  ref.read(selectedTimeRangeProvider.notifier).state =
+                      DateTimeRange(
+                    start: startTime,
+                    end: endTime,
+                  );
+                },
+                firstDayOfWeek: widget.currentWeek.start,
               ),
+              if (widget.currentWeek.start
+                  .isSameDay(DateTime.now().firstDayOfWeek))
+                CurrentTimeDividerOverlay(),
             ],
           ),
         ),
-        if (widget.firstDayOfTheWeek
-            .isSameDay(DateTime.now().firstDayOfTheWeek))
-          CurrentTimeDividerOverlay(),
       ],
     );
   }
 
-  List<TableRow> buildTimelineRows(double timeColumnWidth) {
+  List<TableRow> buildTimelineRows(double timeColumnWidth, Duration duration) {
     return List.generate(24, (hour) {
       return TableRow(
         decoration: BoxDecoration(color: AppPalette.grey100),
@@ -98,7 +124,44 @@ class _WeeklyCalendarBodyState extends ConsumerState<WeeklyCalendarBody> {
               ),
             );
           }
-          return SizedBox(height: 70);
+          return SizedBox(
+            height: 70,
+            child: Column(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      final DateTime day = widget.currentWeek.start
+                          .add(Duration(days: index - 1));
+                      final DateTime newStartTime =
+                          DateTime(day.year, day.month, day.day, hour);
+                      ref.read(selectedTimeRangeProvider.notifier).state =
+                          DateTimeRange(
+                        start: newStartTime,
+                        end: newStartTime.add(duration),
+                      );
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      final DateTime day = widget.currentWeek.start
+                          .add(Duration(days: index - 1));
+                      final DateTime newStartTime =
+                          DateTime(day.year, day.month, day.day, hour, 30);
+                      ref.read(selectedTimeRangeProvider.notifier).state =
+                          DateTimeRange(
+                        start: newStartTime,
+                        end: newStartTime.add(duration),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
         }),
       );
     });

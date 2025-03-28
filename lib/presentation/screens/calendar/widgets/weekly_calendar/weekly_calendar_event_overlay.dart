@@ -23,9 +23,7 @@ class _WeeklyCalendarEventOverlayState
   @override
   Widget build(BuildContext context) {
     final double timeColumnWidth = MediaQuery.sizeOf(context).width * 0.105;
-    final double dayColumnWidth =
-        (MediaQuery.sizeOf(context).width - timeColumnWidth) / 7;
-
+    final double width = MediaQuery.sizeOf(context).width * 0.895 / 7;
     // --- 캘린더 시작 날짜 및 범위 설정
     final startDate = widget.firstDayOfWeek; // 첫 번째 요일로 시작 날짜 설정
     final endDate = startDate.add(Duration(days: 6)); // 시작일부터 7일 후
@@ -45,7 +43,7 @@ class _WeeklyCalendarEventOverlayState
 
     // 왼쪽 위치 계산: 캘린더 시작 날짜와 비교
     final int weekday = (firstStartDate.weekday - startDate.weekday + 7) % 7;
-    final double left = weekday * dayColumnWidth + timeColumnWidth;
+    final double left = timeColumnWidth + weekday * width;
 
     // --- 정렬
     filteredEvents.sort((a, b) {
@@ -78,7 +76,7 @@ class _WeeklyCalendarEventOverlayState
       left: left,
       top: 0,
       child: SizedBox(
-        width: dayColumnWidth,
+        width: width,
         height: 24 * 70, // 하루 24시간 * 70px
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +94,7 @@ class _WeeklyCalendarEventOverlayState
                     return Positioned(
                       top: top,
                       child: SizedBox(
-                        width: dayColumnWidth / columns.length, // 열에 맞춰서 너비 설정
+                        width: width / columns.length, // 열에 맞춰서 너비 설정
                         child: CalendarEventTile(
                           title: event.title,
                           colorType: event.colorType,

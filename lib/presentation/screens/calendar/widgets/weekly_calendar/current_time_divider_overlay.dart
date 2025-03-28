@@ -20,8 +20,12 @@ class _CurrentTimeDividerOverlayState extends State<CurrentTimeDividerOverlay> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(minutes: 1), (_) {
+    final int secondsUntilNextMinute = 60 - _now.second;
+    _timer = Timer(Duration(seconds: secondsUntilNextMinute), () {
       setState(() => _now = DateTime.now());
+      _timer = Timer.periodic(Duration(minutes: 1), (_) {
+        setState(() => _now = DateTime.now());
+      });
     });
   }
 
@@ -34,10 +38,8 @@ class _CurrentTimeDividerOverlayState extends State<CurrentTimeDividerOverlay> {
   @override
   Widget build(BuildContext context) {
     final double timeColumnWidth = MediaQuery.sizeOf(context).width * 0.105;
-    final double width =
-        (MediaQuery.sizeOf(context).width - timeColumnWidth) / 7;
-
-    final double left = (_now.weekday % 7) * width + timeColumnWidth;
+    final double width = MediaQuery.sizeOf(context).width * 0.895 / 7;
+    final double left = timeColumnWidth + (_now.weekday % 7) * width;
     final double top = (_now.hour + _now.minute / 60) * 70;
 
     return Positioned(

@@ -6,14 +6,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class CalendarSetting {
   final CalendarTheme theme;
   final CalendarFontSize fontSize;
-  final CalendarFirstDayOfWeek firstDayOfWeek;
+  final CalendarfirstDayOfWeek firstDayOfWeek;
   final CalendarTimeFormat calendarTimeFormat;
   final bool showCurrentTime;
 
   const CalendarSetting({
     this.theme = CalendarTheme.basic,
     this.fontSize = CalendarFontSize.medium,
-    this.firstDayOfWeek = CalendarFirstDayOfWeek.sunday,
+    this.firstDayOfWeek = CalendarfirstDayOfWeek.sunday,
     this.calendarTimeFormat = CalendarTimeFormat.amPm,
     this.showCurrentTime = true,
   });

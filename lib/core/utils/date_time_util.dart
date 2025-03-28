@@ -8,7 +8,7 @@ extension DateTimeExtension on DateTime {
     return year == other.year && month == other.month && day == other.day;
   }
 
-  DateTime get firstDayOfTheWeek {
+  DateTime get firstDayOfWeek {
     return subtract(Duration(days: weekday % 7));
   }
 }
